@@ -4,6 +4,6 @@ ________________________________________
 
 ### This is a "Demo" of the game
 
-Made by **@omartech104** & **challenger467**
+Made by **@omartech104** & **@challenger467**
 
-I'm moved to a new Account
+I moved to a new Account
