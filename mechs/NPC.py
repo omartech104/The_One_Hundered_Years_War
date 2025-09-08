@@ -20,19 +20,24 @@ class NPC:
 
 
 # Names
-female_names = ["Adelaide","Beatrice","Cecilia","Eleanor","Isolde",
-                "Matilda","Rosalind","Margery","Clarissa","Sibyl",
-                "Christiana","Aveline","Emmeline","Isabella","Joan",
-                "Agnes","Alice","Amice","Constance","Gisela",
-                "Helena","Juliana","Lucia","Melisende","Philippa",
-                "Rowena","Seraphina","Theodora","Yolande","Brunhild"]
+female_names = [
+    "Adelaide","Beatrice","Cecilia","Eleanor","Isolde",
+    "Matilda","Rosalind","Margery","Clarissa","Sibyl",
+    "Christiana","Aveline","Emmeline","Isabella","Joan",
+    "Agnes","Alice","Amice","Constance","Gisela",
+    "Helena","Juliana","Lucia","Melisende","Philippa",
+    "Rowena","Seraphina","Theodora","Yolande","Brunhild"
+]
 
-male_names = ["Alaric","Baldwin","Cedric","Godfrey","Leofric",
-              "Oswald","Roland","Geoffrey","Hugh","William",
-              "Richard","Robert","Edmund","Harold","Thomas",
-              "Anselm","Bartholomew","Berengar","Charles","Eustace",
-              "Frederick","Gerard","Hubert","Lambert","Louis",
-              "Odo","Percival","Ranulf","Simon","Walter"]
+male_names = [
+    "Alaric","Baldwin","Cedric","Godfrey","Leofric",
+    "Oswald","Roland","Geoffrey","Hugh","William",
+    "Richard","Robert","Edmund","Harold","Thomas",
+    "Anselm","Bartholomew","Berengar","Charles","Eustace",
+    "Frederick","Gerard","Hubert","Lambert","Louis",
+    "Odo","Percival","Ranulf","Simon","Walter"
+]
+
 
 # Landmarks per city
 city_landmarks = {
@@ -41,18 +46,50 @@ city_landmarks = {
     "Cairo": ["Bazaar", "Pyramids", "Mosque", "Citadel", "Oasis", "Caravanserai", "Crossroad", "Road"]
 }
 
+# Weighted spawn rates → Markets & Inns busier
+landmark_weights = {
+    "Market": 6,
+    "Bazaar": 6,
+    "Inn": 5,
+    "Tavern": 5,
+    "Cathedral": 4,
+    "Castle": 4,
+    "Tower": 4,
+    "Mosque": 4,
+    "Citadel": 4,
+    "Caravanserai": 3,
+    "Bridge": 3,
+    "Gatehouse": 3,
+    "Oasis": 2,
+    "Crossroad": 2,
+    "Road": 1,
+    "Louvre": 3,
+    "Pyramids": 3,
+}
+
+
+# NPC List
 npc_list = []
+
+
+def weighted_choice(landmarks):
+    """Pick a landmark with weighted probability."""
+    weights = [landmark_weights.get(l, 1) for l in landmarks]
+    return random.choices(landmarks, weights=weights, k=1)[0]
+
 
 # Generate NPCs for each city
 for city, landmarks in city_landmarks.items():
-    for name in random.sample(male_names, 5):
-        npc_list.append(NPC("male", name, city, random.choice(landmarks)))
-    for name in random.sample(female_names, 5):
-        npc_list.append(NPC("female", name, city, random.choice(landmarks)))
+    for _ in range(15):  # 15 NPCs per city
+        gender = random.choice(["male", "female"])
+        name = random.choice(male_names if gender == "male" else female_names)
+        location = weighted_choice(landmarks)
+        npc_list.append(NPC(gender, name, city, location))
 
 
-# Function to check NPCs at current city + tile
+# Function to check NPCs
 def check_for_npcs(current_city, current_tile):
+    """Check if NPCs are in the player's current location."""
     npcs_here = [npc for npc in npc_list if npc.city == current_city and npc.location == current_tile]
     if npcs_here:
         print(f"\nYou see {len(npcs_here)} person(s) here:")

@@ -1,7 +1,6 @@
 # Adding maps
 
 # London Map (7x7)
-# London Map (7x7)
 london_map = [
     ["Road", "Road", "Road", "Crossroad", "Road", "Road", "Road"],
     ["Road", "Tower", "Road", "Road", "Road", "Bridge", "Road"],
@@ -135,8 +134,10 @@ def get_tile_description():
         "Road": {"London": "Walking along a London street.", "Paris": "Walking along a Paris street.", "Cairo": "Walking along a Cairo street."}
     }
 
-    # Default description if tile not listed
-    return descriptions.get(tile, {}).get(current_city, f"You are at {tile} in {current_city}.")
+    if tile == "London" or tile == "Paris" or tile == "Cairo":
+        return descriptions.get(tile, {}).get(current_city, f"The heart of {current_city}, filled with life and activity")
+    else:
+        return descriptions.get(tile, {}).get(current_city, f"You are at {tile} in {current_city}.")
 
 
 def move(direction: str):
