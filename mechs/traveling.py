@@ -3,7 +3,7 @@
 # London Map (7x7)
 london_map = [
     ["Road", "Road", "Road", "Crossroad", "Road", "Road", "Road"],
-    ["Road", "Tower", "Road", "Road", "Road", "Bridge", "Road"],
+    ["Road", "Armory", "Tower", "Road", "Road", "Road", "Bridge"],
     ["Road", "Road", "Crossroad", "London", "Crossroad", "Road", "Road"],
     ["Road", "Castle", "Road", "Crossroad", "Road", "Market", "Road"],
     ["Road", "Road", "Road", "Crossroad", "Road", "Road", "Road"],
@@ -14,7 +14,7 @@ london_map = [
 # Paris Map (7x7)
 paris_map = [
     ["Road", "Road", "Road", "Crossroad", "Road", "Road", "Road"],
-    ["Road", "Louvre", "Road", "Road", "Road", "Tavern", "Road"],
+    ["Road", "Armory", "Louvre", "Road", "Road", "Road", "Tavern"],
     ["Road", "Road", "Crossroad", "Paris", "Crossroad", "Road", "Road"],
     ["Road", "Cathedral", "Road", "Crossroad", "Road", "Market", "Road"],
     ["Road", "Road", "Road", "Crossroad", "Road", "Road", "Road"],
@@ -25,7 +25,7 @@ paris_map = [
 # Cairo Map (7x7)
 cairo_map = [
     ["Road", "Road", "Road", "Crossroad", "Road", "Road", "Road"],
-    ["Road", "Bazaar", "Road", "Road", "Road", "Mosque", "Road"],
+    ["Road", "Bazaar", "Road", "Road", "Road", "Armory","Mosque"],
     ["Road", "Road", "Crossroad", "Cairo", "Crossroad", "Road", "Road"],
     ["Road", "Pyramids", "Road", "Crossroad", "Road", "Citadel", "Road"],
     ["Road", "Road", "Road", "Crossroad", "Road", "Road", "Road"],
