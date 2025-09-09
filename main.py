@@ -1,7 +1,7 @@
 import os
 import sys
 
-from mechs import shopping, traveling, NPC, inventory
+from mechs import shopping, traveling, NPC, inventory, fighting
 
 pltform = sys.platform
 
@@ -29,7 +29,6 @@ while run:
         clear_screen()
         draw()
         print("1. NEW GAME")
-        # We'll work on loading savefile later
         print("2. LOAD GAME")
         print("3. RULES")
         print("4. QUIT GAME")
@@ -47,7 +46,8 @@ while run:
             menu = False
             play = True
         elif choice == "2":
-            pass
+            print("Load feature not implemented yet.")
+            input("> Press Enter...")
         elif choice == "3":
             clear_screen()
             rules = True
@@ -62,7 +62,9 @@ while run:
         clear_screen()
         draw()
         print(traveling.get_tile_description())
+
         NPC.check_for_npcs(traveling.current_city, traveling.get_current_tile())
+
         draw()
         print()
         draw()
@@ -76,7 +78,6 @@ while run:
 
         action = input("# ")
 
-        # ---- Travel ----
         if action == "1":
             print("Where do you want to travel?")
             for city in traveling.cities:
@@ -96,13 +97,16 @@ while run:
                     traveling.player_pos = (2, 3)  # Paris start
                 elif destination == "Cairo":
                     traveling.current_map = traveling.cairo_map
+                    traveling.player_pos = (2, 3)  # Cairo start
 
                 print(f"You have traveled to {destination}.")
             else:
                 print("Invalid city.")
             input("> Press Enter...")
 
-        # ---- Move inside city ----
+        elif action == "2":
+            shopping.open_shop()
+
         elif action == "3":
             clear_screen()
             draw()
@@ -117,16 +121,20 @@ while run:
             if direction in ["N", "S", "E", "W"]:
                 result = traveling.move(direction)
                 print(result)
+
+                NPC.check_for_npcs(traveling.current_city, traveling.get_current_tile())
+
+                fighting.check_for_enemy()
+
             else:
                 print("Invalid direction.")
             input("> Press Enter...")
-        elif action == "2":
-            shopping.open_shop()
 
         elif action == "4":
             inventory.view_inventory()
             input("> Press Enter...")
-            
+
         elif action == "5":
-            play=False
-            menu=True
+            play = False
+            menu = True
+
