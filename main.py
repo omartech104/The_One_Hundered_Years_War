@@ -95,7 +95,6 @@ while run:
                     traveling.player_pos = (2, 3)  # Paris start
                 elif destination == "Cairo":
                     traveling.current_map = traveling.cairo_map
-                    traveling.player_pos = (2, 3)  # Cairo start
 
                 print(f"You have traveled to {destination}.")
             else:
