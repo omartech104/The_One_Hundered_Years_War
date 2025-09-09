@@ -1,7 +1,7 @@
 import os
 import sys
 
-from mechs import shopping, traveling, NPC
+from mechs import shopping, traveling, NPC, inventory
 
 pltform = sys.platform
 
@@ -69,7 +69,8 @@ while run:
         print("1. Travel to another city")
         print("2. Visit the shop")
         print("3. Move inside the city (N/S/E/W)")
-        print("4. Quit to Menu")
+        print("4. Open inventory")
+        print("5. Quit to Menu")
         draw()
         print()
 
@@ -121,6 +122,11 @@ while run:
             input("> Press Enter...")
         elif action == "2":
             shopping.open_shop()
+
         elif action == "4":
+            inventory.view_inventory()
+            input("> Press Enter...")
+            
+        elif action == "5":
             play=False
             menu=True
