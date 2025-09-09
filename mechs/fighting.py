@@ -1,11 +1,13 @@
 from mechs import shopping
+
+inv = shopping.inventory
 import random
 
 player_hp = 3000
 player_dp = 0
 
 
-inv = shopping.inventory
+
 
 class Enemy:
     def __init__(self,kind, dp, hp):

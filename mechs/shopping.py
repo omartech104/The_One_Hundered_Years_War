@@ -10,13 +10,6 @@ shops = {
     "London": {
         "Market": {
             "A loaf of bread": {"price": 5, "desc": "Baked in a simple oven."}
-        },
-        "Armory": {
-            "Longsword": {"price": 80, "desc": "A strong blade favored by knights.", "damage": 300},
-            "Battle Axe": {"price": 100, "desc": "A heavy axe for brutal combat.", "damage": 350},
-            "Short Bow": {"price": 60, "desc": "A simple bow with limited range.", "damage": 200},
-            "Warhammer": {"price": 120, "desc": "Crush your foes with sheer force.", "damage": 400},
-            "Dagger": {"price": 30, "desc": "Quick, light, and deadly up close.", "damage": 150}
         }
     },
     "Paris": {
@@ -24,14 +17,6 @@ shops = {
             "Book": {"price": 30, "desc": "A tome of medieval knowledge."},
             "Wine": {"price": 20, "desc": "A fine Parisian vintage."},
             "Illuminated Manuscript": {"price": 60, "desc": "A missing part of something unknown."}
-        },
-        "Armory": {
-            "Rapier": {"price": 90, "desc": "Elegant and deadly fencing blade.", "damage": 250},
-            "Halberd": {"price": 110, "desc": "A polearm used by Parisian guards.", "damage": 370},
-            "Crossbow": {"price": 100, "desc": "Powerful but slow to reload.", "damage": 320},
-            "Mace": {"price": 70, "desc": "A crushing weapon popular among clergy knights.", "damage": 280},
-            "Dirk": {"price": 40, "desc": "A slim blade used by assassins.", "damage": 180}
-
         }
     },
     "Cairo": {
@@ -39,14 +24,6 @@ shops = {
             "Spices": {"price": 25, "desc": "Exotic spices from the East."},
             "Halum Cheese": {"price": 50, "desc": "A half pound of local-made Cheese."},
             "A copy of matn al-ajrumiyyah": {"price": 100, "desc": "A rare copy of matn al-ajrumiyyah."}
-        },
-        "Armory": {
-            "Scimitar": {"price": 85, "desc": "A curved sword, swift and sharp.", "damage": 270},
-            "Spear": {"price": 60, "desc": "Simple but effective in battle.", "damage": 240},
-            "Composite Bow": {"price": 95, "desc": "Strong bow with great range.", "damage": 280},
-            "Khopesh": {"price": 120, "desc": "An ancient Egyptian sickle-sword.", "damage": 360},
-            "Jambiya": {"price": 35, "desc": "A traditional curved dagger.", "damage": 160}
-
         }
     }
 }
