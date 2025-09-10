@@ -25,9 +25,6 @@ def view_inventory():
             else:
                 print("Invalid input.")
     else:
-        print(f"Your HP: {fighting.player_hp}")
-        print(f"Remaining Gold: {shopping.player_gold}")
-        print()
         print("Your inventory is empty")
 
 
@@ -39,18 +36,17 @@ def use_item(item):
     for city in shops.values():
         for shop_type, shop_items in city.items():
             if item in shop_items:
-                # healing / utility effects
                 if "bread" in item.lower():
-                    fighting.player_hp = min(fighting.player_hp + 200, 1000)
+                    fighting.player_hp = min(fighting.player_hp + 200, 1500)
                     print(f"You ate {item} and healed 200 HP. Current HP: {fighting.player_hp}")
                 elif "wine" in item.lower():
-                    fighting.player_hp = min(fighting.player_hp + 100, 1000)
+                    fighting.player_hp = min(fighting.player_hp + 100, 1500)
                     print(f"You drank {item} and healed 100 HP. Current HP: {fighting.player_hp}")
                 elif "cheese" in item.lower():
-                    fighting.player_hp = min(fighting.player_hp + 150, 1000)
+                    fighting.player_hp = min(fighting.player_hp + 150, 1500)
                     print(f"You ate {item} and healed 150 HP. Current HP: {fighting.player_hp}")
                 elif "potion" in item.lower():
-                    fighting.player_hp = min(fighting.player_hp + 500, 1000)
+                    fighting.player_hp = min(fighting.player_hp + 500, 1500)
                     print(f"You used {item} and restored 500 HP. Current HP: {fighting.player_hp}")
                 else:
                     print(f"You used {item}, but nothing happened...")
