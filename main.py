@@ -1,7 +1,7 @@
 import os
 import sys
 
-from mechs import inventory, shopping, traveling, NPC, fighting
+from mechs import inventory, shopping, traveling, NPC, fighting, ascii_art
 
 pltform = sys.platform
 
@@ -27,6 +27,7 @@ def draw():
 while run:
     while menu:
         clear_screen()
+        ascii_art.print_title_screen()
         draw()
         print("1. NEW GAME")
         print("2. LOAD GAME")
