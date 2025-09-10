@@ -1,7 +1,7 @@
 import os
 import sys
 
-from mechs import shopping, traveling, NPC, inventory, fighting
+from mechs import inventory, shopping, traveling, NPC, fighting
 
 pltform = sys.platform
 

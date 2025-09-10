@@ -6,7 +6,8 @@ inv = shopping.inventory
 shops = shopping.shops
 
 # player stats
-player_hp = 3000
+player_hp = 1500
+player_hp=min(player_hp, 1500)
 player_dp = 50
 equipped_weapon = None
 
