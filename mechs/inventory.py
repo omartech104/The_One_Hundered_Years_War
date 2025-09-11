@@ -1,5 +1,5 @@
 from mechs import shopping, fighting
-
+from .puzzles import cipher
 # View inventory and optionally use items
 def view_inventory():
     inv = shopping.inventory
@@ -28,11 +28,25 @@ def view_inventory():
         print("Your inventory is empty")
 
 
+content = cipher.encrypted_message
+letter_content = "You've finished the game"
 # Handle item usage effects
 def use_item(item):
     inv = shopping.inventory
-    shops = shopping.shops
 
+    # Special quest items first
+    if item.lower() == "manuscript":
+        print(f"The content of the Manuscript is: {content}")
+        if "Illuminated Manuscript" not in inv:
+            inv.append("Illuminated Manuscript")
+        return
+    elif item.lower() == "letter":
+        print(f"The content of the letter: {letter_content}")
+        # Letter stays in inventory, so we don’t remove it
+        return
+
+    # Shop items (healing, etc.)
+    shops = shopping.shops
     for city in shops.values():
         for shop_type, shop_items in city.items():
             if item in shop_items:
@@ -51,9 +65,10 @@ def use_item(item):
                 else:
                     print(f"You used {item}, but nothing happened...")
 
-                # Remove item from inventory after use
+                # Shop consumables are removed after use
                 inv.remove(item)
                 return
 
+    # If nothing matched
     print(f"{item} cannot be used.")
 

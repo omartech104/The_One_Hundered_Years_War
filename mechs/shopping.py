@@ -1,7 +1,7 @@
 from mechs import traveling
 
 # Example player variables
-player_gold = 100
+player_gold = 1000
 inventory = []
 
 
@@ -9,7 +9,9 @@ inventory = []
 shops = {
     "London": {
         "Market": {
-            "A loaf of bread": {"price": 5, "desc": "Baked in a simple oven.", "stock": 5}
+            "A loaf of bread": {"price": 5, "desc": "Baked in a simple oven.", "stock": 5},
+            "Astrolabe": {"price": 400, "desc": "A insturment of navigation.", "stock": 5},
+            "Gemstone": {"price": 800, "desc": "A rare gemstone", "stock": 1}
         },
         "Armory": {
             "Longsword": {"price": 80, "desc": "A strong blade favored by knights.", "damage": 300, "stock": 2},

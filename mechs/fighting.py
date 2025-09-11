@@ -1,13 +1,8 @@
 import random
-from mechs import traveling, shopping
-
-# link inventory + shops
-inv = shopping.inventory
-shops = shopping.shops
 
 # player stats
 player_hp = 1500
-player_hp=min(player_hp, 1500)
+player_hp = min(player_hp, 1500)
 player_dp = 50
 equipped_weapon = None
 
@@ -45,6 +40,10 @@ class Enemy:
 # equip weapon system
 def equip_weapon():
     global player_dp, equipped_weapon
+    from mechs import shopping
+
+    inv = shopping.inventory
+    shops = shopping.shops
 
     if not inv:
         print("You have no weapons in your inventory!")
@@ -165,6 +164,8 @@ def combat(enemy):
 
 # check if enemy spawns on current tile
 def check_for_enemy():
+    from mechs import traveling
+
     city = traveling.current_city
     row, col = traveling.player_pos
     tile = traveling.current_map[row][col]

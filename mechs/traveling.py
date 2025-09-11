@@ -1,4 +1,7 @@
-# Adding maps
+from mechs import cathedral_boss
+from .puzzles import riddle
+
+# --- Maps ---
 
 # London Map (7x7)
 london_map = [
@@ -25,7 +28,7 @@ paris_map = [
 # Cairo Map (7x7)
 cairo_map = [
     ["Road", "Road", "Road", "Crossroad", "Road", "Road", "Road"],
-    ["Road", "Bazaar", "Road", "Road", "Road", "Armory","Mosque"],
+    ["Road", "Bazaar", "Road", "Road", "Road", "Armory", "Mosque"],
     ["Road", "Road", "Crossroad", "Cairo", "Crossroad", "Road", "Road"],
     ["Road", "Pyramids", "Road", "Crossroad", "Road", "Citadel", "Road"],
     ["Road", "Road", "Road", "Crossroad", "Road", "Road", "Road"],
@@ -33,9 +36,7 @@ cairo_map = [
     ["Road", "Road", "Road", "Crossroad", "Road", "Road", "Road"]
 ]
 
-
-
-# Setting an init location
+# Starting location
 current_city = "London"
 player_pos = (2, 3)
 cities = ["London", "Paris", "Cairo"]
@@ -46,7 +47,7 @@ def get_location_name():
     row, col = player_pos
     tile = current_map[row][col]
 
-    # Roads and crossroads (generic descriptions)
+    # Generic descriptions for roads and crossroads
     if tile == "Road":
         if current_city == "London":
             return "a cobblestone road, damp from the English mist"
@@ -57,7 +58,7 @@ def get_location_name():
     elif tile == "Crossroad":
         return "a busy crossroad where paths meet"
 
-    # Landmarks
+    # Landmark descriptions
     landmark_descriptions = {
         # London
         "Tower": "The Tower of London, grim and foreboding",
@@ -91,21 +92,35 @@ def get_location_name():
     if tile in ["London", "Paris", "Cairo"]:
         return f"the heart of {tile}, filled with life and activity"
 
-    # Default fallback
+    # Default
     return tile
 
-# Add this function at the bottom of traveling.py
 
 def get_current_tile():
-    """Return the name of the tile (landmark/road/etc.) where the player is standing."""
     row, col = player_pos
     return current_map[row][col]
 
-# Function to get a description for current tile
+
 def get_tile_description():
     row, col = player_pos
     tile = current_map[row][col]
 
+    # Paris Cathedral event
+    if tile == "Cathedral" and current_city == "Paris" and cathedral_boss.defeated == False:
+        print("You step into the grand Paris Cathedral...")
+        cathedral_boss.fight_cathedral_boss()
+        return "The Cathedral stands tall, silent after the battle."
+
+    # Cairo Citadel event
+    if tile == "Citadel" and current_city == "Cairo":
+        if not riddle.solved:
+            print("You arrive at the mighty Cairo Citadel...")
+            riddle.play_riddle()
+            return "The Citadel tests your wisdom with a riddle."
+        else:
+            return "The Citadel stands silent, its riddle already solved."
+
+    # Generic descriptions
     descriptions = {
         "Market": {
             "London": "You are now in London Market, filled with goods and merchants.",
@@ -134,14 +149,13 @@ def get_tile_description():
         "Road": {"London": "Walking along a London street.", "Paris": "Walking along a Paris street.", "Cairo": "Walking along a Cairo street."}
     }
 
-    if tile == "London" or tile == "Paris" or tile == "Cairo":
+    if tile in ["London", "Paris", "Cairo"]:
         return descriptions.get(tile, {}).get(current_city, f"The heart of {current_city}, filled with life and activity")
     else:
         return descriptions.get(tile, {}).get(current_city, f"You are at {tile} in {current_city}.")
 
 
 def move(direction: str):
-    """Move the player inside the current map"""
     global player_pos
     row, col = player_pos
 
@@ -156,7 +170,7 @@ def move(direction: str):
     else:
         return "Invalid direction."
 
-    # Check bounds
+    # Check boundaries
     max_row = len(current_map) - 1
     max_col = len(current_map[0]) - 1
     if 0 <= new_pos[0] <= max_row and 0 <= new_pos[1] <= max_col:
@@ -164,3 +178,4 @@ def move(direction: str):
         return f"You moved {direction} to {get_location_name()}."
     else:
         return "You cannot go that way."
+
