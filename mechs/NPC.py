@@ -10,11 +10,26 @@ class NPC:
     def message_to_player(self, msg=None):
         if not msg:
             msg = random.choice([
-                "Greetings, traveler.",
-                "The roads are dangerous, beware.",
-                "Have you heard the latest news?",
-                "Supplies are scarce these days.",
-                "May fortune smile upon you."
+                "Welcome, traveler—may your journey be blessed.",
+                "Good day to you. Have you heard news from London?",
+                "The roads are long and dangers many; stay sharp.",
+                "I barter in secrets as well as goods—what do you seek?",
+                "They say the Pyramids glow at dusk. Have you seen them?",
+                "Be strong. Fortune favors the bold.",
+                "Spare some coin? A small donation for a hungry soul.",
+                "The Templars passed through here yesterday. Rumors follow.",
+                "Your weapon looks worn. Might be time for a new blade.",
+                "A loaf of bread is more precious than gold when hungry.",
+                "Drink this wine by candlelight—it soothes the heart.",
+                "Books hold power. Read, learn, you’ll survive longer.",
+                "Music in the tavern tonight—come join if you can handle the ale.",
+                "May your shields hold, and your blade stay sharp.",
+                "Yesterday’s storms destroyed the bridge outside town.",
+                "If you help a stranger, the gods will help you in return.",
+                "Beware the bandits at dusk—they know every winding path.",
+                "Even the simplest traveler has tales to share.",
+                "Let me tell you of the old wars and the ghosts they left behind."
+
             ])
         print(f"{self.name} ({self.gender}) at {self.location}, {self.city}: {msg}")
 
