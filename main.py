@@ -112,12 +112,12 @@ while run:
             input("> Press Enter...")
 
         elif action == "2":
-            if traveling.current_map == "London":
+            if traveling.current_map == traveling.london_map:
                 traveling.player_pos = (2, 3)  # London start
-            elif traveling.current_map == "Paris":
+            elif traveling.current_map == traveling.paris_map:
                 traveling.player_pos = (2, 3)  # Paris start
-            elif traveling.current_map == "Cairo":
-                traveling.player_pos = (2, 3)
+            elif traveling.current_map == traveling.cairo_map:
+                traveling.player_pos = (3, 2)
 
         elif action == "3":
             shopping.open_shop()
