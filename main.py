@@ -70,10 +70,11 @@ while run:
         print()
         draw()
         print("1. Travel to another city")
-        print("2. Visit the shop")
-        print("3. Move inside the city (N/S/E/W)")
-        print("4. Open inventory")
-        print("5. Quit to Menu")
+        print("2. Go to the Center of city")
+        print("3. Visit the shop")
+        print("4. Move inside the city (N/S/E/W)")
+        print("5. Open inventory")
+        print("6. Quit to Menu")
         draw()
         print()
 
@@ -106,9 +107,17 @@ while run:
             input("> Press Enter...")
 
         elif action == "2":
-            shopping.open_shop()
+           if traveling.current_map == "London":
+                traveling.player_pos = (2, 3)  # London start
+           elif traveling.current_map == "Paris":
+                traveling.player_pos = (2, 3)  # Paris start
+           elif traveling.current_map == "Cairo":
+                traveling.player_pos = (2, 3) 
 
         elif action == "3":
+            shopping.open_shop()
+
+        elif action == "4":
             clear_screen()
             draw()
             print("Which direction do you want to move?")
@@ -130,12 +139,11 @@ while run:
             else:
                 print("Invalid direction.")
             input("> Press Enter...")
-
-        elif action == "4":
+        elif action == "5":
             inventory.view_inventory()
             input("> Press Enter...")
 
-        elif action == "5":
+        elif action == "6":
             play = False
             menu = True
 

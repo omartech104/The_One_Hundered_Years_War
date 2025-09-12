@@ -1,5 +1,7 @@
 import random
 
+from mechs import inventory
+
 # player stats
 player_hp = 1500
 player_hp = min(player_hp, 1500)
@@ -53,7 +55,7 @@ def equip_weapon():
     weapon_list = []
     for item in inv:
         for city in shops.values():
-            if "Armory" in city and item in city["Armory"]:
+            if "Armory" in city and item in city["Armory"].keys():
                 weapon_list.append(item)
                 print(f"{len(weapon_list)}. {item} ({city['Armory'][item]['damage']} dmg)")
 
@@ -92,9 +94,8 @@ def player_attack(enemy):
 # player heals
 def player_heal():
     global player_hp
-    heal_amount = 200
-    player_hp += heal_amount
-    print(f"You healed for {heal_amount}. Current HP: {player_hp}")
+    inventory.view_inventory()
+    player_hp = min(player_hp, 1500)
 
 
 # enemy attacks player

@@ -35,7 +35,7 @@ def use_item(item):
     inv = shopping.inventory
 
     # Special quest items first
-    if item.lower() == "manuscript":
+    if item == "Illuminated Manuscript":
         print(f"The content of the Manuscript is: {content}")
         if "Illuminated Manuscript" not in inv:
             inv.append("Illuminated Manuscript")
@@ -53,20 +53,22 @@ def use_item(item):
                 if "bread" in item.lower():
                     fighting.player_hp = min(fighting.player_hp + 200, 1500)
                     print(f"You ate {item} and healed 200 HP. Current HP: {fighting.player_hp}")
+                    inv.remove(item)
                 elif "wine" in item.lower():
                     fighting.player_hp = min(fighting.player_hp + 100, 1500)
                     print(f"You drank {item} and healed 100 HP. Current HP: {fighting.player_hp}")
+                    inv.remove(item)
                 elif "cheese" in item.lower():
                     fighting.player_hp = min(fighting.player_hp + 150, 1500)
                     print(f"You ate {item} and healed 150 HP. Current HP: {fighting.player_hp}")
+                    inv.remove(item)
                 elif "potion" in item.lower():
                     fighting.player_hp = min(fighting.player_hp + 500, 1500)
                     print(f"You used {item} and restored 500 HP. Current HP: {fighting.player_hp}")
+                    inv.remove(item)
                 else:
                     print(f"You used {item}, but nothing happened...")
 
-                # Shop consumables are removed after use
-                inv.remove(item)
                 return
 
     # If nothing matched
