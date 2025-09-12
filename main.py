@@ -27,7 +27,7 @@ def draw():
 while run:
     while menu:
         clear_screen()
-        ascii_art.print_title_screen()
+        ascii_art.welcome_screen()
         draw()
         print("1. NEW GAME")
         print("2. LOAD GAME")
