@@ -1,7 +1,7 @@
 from mechs import traveling
 
 # Example player variables
-player_gold = 1000
+player_gold = 500
 inventory = []
 
 

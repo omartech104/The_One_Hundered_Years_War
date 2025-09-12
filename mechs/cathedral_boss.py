@@ -2,8 +2,8 @@ import random
 from mechs import fighting, shopping, inventory
 from .puzzles import cipher
 
-boss_hp = 500
-boss_attack = (30, 50)  # random attack range
+boss_hp = 1500
+boss_attack = (50, 250)  # random attack range
 equipped_weapon = None
 equipped_damage = 50  # fists by default
 defeated = False  # ✅ boss state is tracked
@@ -122,6 +122,7 @@ def post_boss_event():
         print("\nThe chest clicks open...")
         inventory.content = cipher.message
         print(f"You obtained the real message")
+        shopping.player_gold += 355
     else:
         print("\nThe chest remains sealed... Maybe try again later.")
 

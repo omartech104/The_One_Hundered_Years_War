@@ -26,9 +26,10 @@ def play_riddle():
     user_answer = input("\nEnter your answer: ").strip().lower()
 
     if user_answer == solution:
-        print("\nCorrect! The answer is 'particle'.\n\nOpen the letter")
+        print("\nCorrect! The answer is 'particle'.\nOpen the letter")
         solved = True
         shopping.inventory.append("Letter")
+        shopping.player_gold += 400
     else:
         print("\nFalse, try again later.")
         solved = False
