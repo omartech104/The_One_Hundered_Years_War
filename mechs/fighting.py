@@ -1,6 +1,5 @@
 import random
-
-from mechs import inventory
+from mechs import traveling, shopping, inventory
 
 # player stats
 player_hp = 1500
@@ -31,12 +30,12 @@ enemy_spawns = {
 # enemy class
 class Enemy:
     def __init__(self, kind):
-        self.kind = kind                          # type of enemy
-        self.dp = random.randint(80, 150)         # damage points
-        self.hp = random.randint(500, 1200)       # health points
+        self.kind = kind
+        self.dp = random.randint(80, 150)
+        self.hp = random.randint(500, 1200)
 
     def cutscene(self):
-        print(f"A {self.kind} appears at this location!")  # intro message
+        print(f"A {self.kind} appears at this location!")
 
 
 # equip weapon system
@@ -81,17 +80,14 @@ def equip_weapon():
 
 # player attacks enemy
 def player_attack(enemy):
-    global player_hp
     damage = player_dp
     enemy.hp -= damage
     print(f"You hit the {enemy.kind} with {equipped_weapon or 'fists'} for {damage} damage!")
     if enemy.hp <= 0:
-        print(f"The {enemy.kind} has been slain!")  # enemy dies
+        print(f"The {enemy.kind} has been slain!")
         return True
     return False
 
-
-# player heals
 def player_heal():
     global player_hp
     inventory.view_inventory()
@@ -105,33 +101,15 @@ def enemy_attack(enemy):
     player_hp -= damage
     print(f"The {enemy.kind} attacked you for {damage} damage! Current HP: {player_hp}")
     if player_hp <= 0:
-        print("You were slain... Game Over.")  # death
+        print("You were slain... Game Over.")
         return True
     return False
 
 
-# enemy heals
-def enemy_heal(enemy):
-    heal_amount = 100
-    enemy.hp += heal_amount
-    print(f"The {enemy.kind} healed for {heal_amount}. Enemy HP: {enemy.hp}")
-
-
-# player tries to dodge
-def player_dodge(enemy):
-    if random.random() > 0.5:
-        print("You dodged the attack successfully!")  # success
-    else:
-        print("Dodge failed!")  # fail
-        enemy_attack(enemy)
-
-
-# combat loop
+# combat loop (returns whether enemy was killed, and loot)
 def combat(enemy):
     global player_hp
     enemy.cutscene()
-
-    # let player pick weapon
     equip_weapon()
 
     while player_hp > 0 and enemy.hp > 0:
@@ -141,41 +119,42 @@ def combat(enemy):
         if des == "1":
             killed = player_attack(enemy)
             if killed:
-                break
-            if random.random() < 0.8:  # enemy usually attacks
+                # ✅ Enemy drops loot
+                loot = [f"{enemy.kind} Loot"]
+                shopping.inventory.extend(loot)
+                return enemy.kind, loot
+            if random.random() < 0.8:
                 if enemy_attack(enemy):
-                    break
-            else:
-                enemy_heal(enemy)
-
+                    return None, []
         elif des == "2":
-            player_heal()
-            if random.random() < 0.7:  # enemy may attack after heal
-                if enemy_attack(enemy):
-                    break
-
+            pass
         elif des == "3":
-            player_dodge(enemy)
-
+            if random.random() > 0.5:
+                print("You dodged the attack successfully!")
+            else:
+                print("Dodge failed!")
+                if enemy_attack(enemy):
+                    return None, []
         else:
             print("Invalid choice! The enemy takes the chance to strike...")
             if enemy_attack(enemy):
-                break
+                return None, []
+
+    return None, []
 
 
 # check if enemy spawns on current tile
 def check_for_enemy():
-    from mechs import traveling
-
     city = traveling.current_city
     row, col = traveling.player_pos
     tile = traveling.current_map[row][col]
 
     if city in enemy_spawns and tile in enemy_spawns[city]:
         possible_enemies = enemy_spawns[city][tile]
-        enemy_kind = random.choice(possible_enemies)  # pick a random enemy
+        enemy_kind = random.choice(possible_enemies)
         enemy = Enemy(enemy_kind)
-        combat(enemy)  # start fight
-    else:
-        print("The area is quiet. No enemies here.")  # no enemy
+        return combat(enemy)  # ✅ returns (defeated_enemy, looted_items)
 
+    else:
+        print("The area is quiet. No enemies here.")
+        return None, []

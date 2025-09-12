@@ -1,7 +1,7 @@
 import os
 import sys
 
-from mechs import inventory, shopping, traveling, NPC, fighting, ascii_art
+from mechs import inventory, shopping, traveling, NPC, fighting, ascii_art, quest
 
 pltform = sys.platform
 
@@ -65,6 +65,11 @@ while run:
         print(traveling.get_tile_description())
 
         NPC.check_for_npcs(traveling.current_city, traveling.get_current_tile())
+        if (traveling.current_city, traveling.get_current_tile()) == ("Paris", "Cathedral"):
+            quest.start_quest("Lost Relic")
+
+        if (traveling.current_city, traveling.get_current_tile()) == ("Cairo", "Bazaar"):
+            quest.start_quest("Missing ring")
 
         draw()
         print()
@@ -107,12 +112,12 @@ while run:
             input("> Press Enter...")
 
         elif action == "2":
-           if traveling.current_map == "London":
+            if traveling.current_map == "London":
                 traveling.player_pos = (2, 3)  # London start
-           elif traveling.current_map == "Paris":
+            elif traveling.current_map == "Paris":
                 traveling.player_pos = (2, 3)  # Paris start
-           elif traveling.current_map == "Cairo":
-                traveling.player_pos = (2, 3) 
+            elif traveling.current_map == "Cairo":
+                traveling.player_pos = (2, 3)
 
         elif action == "3":
             shopping.open_shop()
@@ -133,12 +138,22 @@ while run:
                 print(result)
 
                 NPC.check_for_npcs(traveling.current_city, traveling.get_current_tile())
+                defeated_enemy, looted_items = fighting.check_for_enemy()
 
-                fighting.check_for_enemy()
+                if defeated_enemy:
+                    for q_name in quest.quests.keys():
+                        quest.check_quest_progress(
+                            q_name,
+                            traveling.current_city,
+                            traveling.get_current_tile(),
+                            defeated_enemy,
+                            looted_items,
+                        )
 
             else:
                 print("Invalid direction.")
             input("> Press Enter...")
+
         elif action == "5":
             inventory.view_inventory()
             input("> Press Enter...")
