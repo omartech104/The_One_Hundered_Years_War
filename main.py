@@ -107,6 +107,26 @@ while run:
                     traveling.player_pos = (2, 3)  # Cairo start
 
                 print(f"You have traveled to {destination}.")
+                print(f"Do you want to view {destination}'s map (y/n)")
+                map_input = input("# ")
+                if map_input == "y":
+                    if destination == "London":
+                            draw()
+                            for row in traveling.cairo_map:
+                                print(" ".join(traveling.symbols[tile] for tile in row))
+                            draw()
+                    elif destination == "Paris":
+                            draw()
+                            for row in traveling.cairo_map:
+                                print(" ".join(traveling.symbols[tile] for tile in row))
+                            draw()
+                    elif destination == "Cairo":
+                            draw()
+                            for row in traveling.cairo_map:
+                                print(" ".join(traveling.symbols[tile] for tile in row))
+                            draw()
+                    else:
+                        pass
             else:
                 print("Invalid city.")
             input("> Press Enter...")

@@ -3,6 +3,32 @@ from .puzzles import riddle
 
 # --- Maps ---
 
+symbols = {
+    "empty": " ",
+    "Road": "▪",
+    "Crossroad": "+",
+    "Armory": "S",
+    "Market": "S",
+    "Bazaar": "S",
+    "Tower": "G",
+    "Bridge": "G",
+    "London": "G",
+    "Castle": "G",
+    "Docks": "G",
+    "Gatehouse": "G",
+    "Louvre": "G",
+    "Paris": "G",
+    "Cathedral": "G",
+    "Tavern": "G",
+    "Inn": "G",
+    "Mosque": "G",
+    "Cairo": "G",
+    "Pyramids": "G",
+    "Citadel": "G",
+    "Oasis": "G",
+    "Caravanserai": "G"
+}
+
 # London Map (7x7)
 london_map = [
     ["Road", "Road", "Road", "Crossroad", "Road", "Road", "Road"],
@@ -91,7 +117,7 @@ def get_location_name():
     # City centers
     if tile in ["London", "Paris", "Cairo"]:
         return f"the heart of {tile}, filled with life and activity"
-
+        
     # Default
     return tile
 
