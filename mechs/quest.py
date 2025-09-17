@@ -13,7 +13,7 @@ quests = {
             "city": "Paris",
             "tile": "Louvre",
             "enemy": "Bandit",
-            "item": "Ancient Relic",
+            "item": "Bandit Loot",
         },
         "reward": {
             "gold": 300,
@@ -53,7 +53,10 @@ def start_quest(quest_name):
 def check_quest_progress(quest_name, city, tile, defeated_enemy, looted_items):
     quest = quests.get(quest_name)
     if not quest or quest["completed"]:
-        return
+        print("quest isnt triggered")
+        print(defeated_enemy)
+        print(looted_items)
+    # here ^^^^
 
     obj = quest["objective"]
     if city == obj["city"] and tile == obj["tile"] and defeated_enemy == obj["enemy"]:
@@ -66,6 +69,7 @@ def complete_quest(quest_name):
     quest = quests.get(quest_name)
     if quest and not quest["completed"]:
         quest["completed"] = True
+        
         reward = quest["reward"]
 
         shopping.player_gold += reward["gold"]

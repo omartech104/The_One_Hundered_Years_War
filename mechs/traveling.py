@@ -62,6 +62,35 @@ cairo_map = [
     ["Road", "Road", "Road", "Crossroad", "Road", "Road", "Road"]
 ]
 
+london_landmarks = [
+    {"name": "Tower", "coords": (1, 2)},
+    {"name": "Bridge", "coords": (1, 6)},
+    {"name": "London", "coords": (2, 3)},
+    {"name": "Castle", "coords": (3, 1)},
+    {"name": "Docks", "coords": (5, 1)},
+    {"name": "Gatehouse", "coords": (5, 5)}
+]
+
+# Paris Landmarks
+paris_landmarks = [
+    {"name": "Louvre", "coords": (1, 2)},
+    {"name": "Tavern", "coords": (1, 6)},
+    {"name": "Paris", "coords": (2, 3)},
+    {"name": "Cathedral", "coords": (3, 1)},
+    {"name": "Gatehouse", "coords": (5, 1)},
+    {"name": "Inn", "coords": (5, 5)}
+]
+
+# Cairo Landmarks
+cairo_landmarks = [
+    {"name": "Mosque", "coords": (1, 6)},
+    {"name": "Cairo", "coords": (2, 3)},
+    {"name": "Pyramids", "coords": (3, 1)},
+    {"name": "Citadel", "coords": (3, 5)},
+    {"name": "Oasis", "coords": (5, 1)},
+    {"name": "Caravanserai", "coords": (5, 5)}
+]
+
 # Starting location
 current_city = "London"
 player_pos = (2, 3)
@@ -204,4 +233,43 @@ def move(direction: str):
         return f"You moved {direction} to {get_location_name()}."
     else:
         return "You cannot go that way."
+
+
+def fast_travel():
+    global player_pos
+    print("Travel to any landmark")
+    if current_city == "London":
+        for i,landmark in enumerate(london_landmarks):
+            print(f"{i} - {landmark['name']}")
+        landmark_num = input("Type the number of the Landmark: ")
+        for i,landmark in enumerate(london_landmarks):
+            if i == int(landmark_num):
+                row, col = player_pos
+                new_pos = landmark["coords"]
+                player_pos = new_pos
+                print(player_pos)
+                print(f"You moved to {get_location_name()}.")
+    elif current_city == "Paris":
+        for i,landmark in enumerate(paris_landmarks):
+            print(f"{i} - {landmark['name']}")
+        landmark_num = input("Type the number of the Landmark: ")
+        for i,landmark in enumerate(paris_landmarks):
+            if i == int(landmark_num):
+                row, col = player_pos
+                new_pos = landmark["coords"]
+                player_pos = new_pos
+                print(player_pos)
+                print(f"You moved to {get_location_name()}.")
+    elif current_city == "Cairo":
+        for i,landmark in enumerate(cairo_landmarks):
+            print(f"{i} - {landmark['name']}")
+
+        landmark_num = input("Type the number of the Landmark: ")
+        for i,landmark in enumerate(cairo_landmarks):
+            if i == int(landmark_num):
+                row, col = player_pos
+                new_pos = landmark["coords"]
+                player_pos = new_pos
+                print(player_pos)
+                print(f"You moved to {get_location_name()}.")
 

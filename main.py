@@ -77,7 +77,7 @@ while run:
         print("1. Travel to another city")
         print("2. Go to the Center of city")
         print("3. Visit the shop")
-        print("4. Move inside the city (N/S/E/W)")
+        print("4. Move inside the city (N/S/E/W/Fast-travel)")
         print("5. Open inventory")
         print("6. Quit to Menu")
         draw()
@@ -150,6 +150,7 @@ while run:
             print("S - South")
             print("E - East")
             print("W - West")
+            print("F - Fast Travel")
             draw()
             direction = input("# ").upper()
 
@@ -169,7 +170,20 @@ while run:
                             defeated_enemy,
                             looted_items,
                         )
+            elif direction == "F":
+                traveling.fast_travel()
+                NPC.check_for_npcs(traveling.current_city, traveling.get_current_tile())
+                defeated_enemy, looted_items = fighting.check_for_enemy()
 
+                if defeated_enemy:
+                    for q_name in quest.quests.keys():
+                        quest.check_quest_progress(
+                            q_name,
+                            traveling.current_city,
+                            traveling.get_current_tile(),
+                            defeated_enemy,
+                            looted_items,
+                )
             else:
                 print("Invalid direction.")
             input("> Press Enter...")
@@ -182,3 +196,5 @@ while run:
             play = False
             menu = True
 
+
+#couldnt't fix the quest error, sorry :(
