@@ -51,11 +51,15 @@ def use_item(item):
         for shop_type, shop_items in city.items():
             if item in shop_items:
                 if "bread" in item.lower():
-                    fighting.player_hp = min(fighting.player_hp + 200, 1500)
+                    fighting.player_hp = min(fighting.player_hp + 230, 1500)
                     print(f"You ate {item} and healed 200 HP. Current HP: {fighting.player_hp}")
                     inv.remove(item)
                 elif "wine" in item.lower():
                     fighting.player_hp = min(fighting.player_hp + 100, 1500)
+                    print(f"You drank {item} and healed 100 HP. Current HP: {fighting.player_hp}")
+                    inv.remove(item)
+                elif "Blessed Wine" in item:
+                    fighting.player_hp = min(fighting.player_hp + 750, 1500)
                     print(f"You drank {item} and healed 100 HP. Current HP: {fighting.player_hp}")
                     inv.remove(item)
                 elif "cheese" in item.lower():

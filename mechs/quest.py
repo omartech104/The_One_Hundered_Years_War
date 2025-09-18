@@ -85,3 +85,12 @@ def quest_log():
         status = "Completed" if quest["completed"] else "In Progress"
         print(f"{quest['name']} - {status}")
 
+def trigger_quest_enemy(quest_name, city, tile):
+    quest = quests.get(quest_name)
+    if not quest or quest["completed"]:
+        return None
+    obj = quest["objective"]
+    if city == obj["city"] and tile == obj["tile"]:
+        print(f"You sense danger... {obj['enemy']} is nearby for the quest '{quest['name']}'!")
+        return obj["enemy"]
+    return None

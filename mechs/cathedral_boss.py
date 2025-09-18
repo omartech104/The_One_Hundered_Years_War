@@ -3,7 +3,7 @@ from mechs import fighting, shopping, inventory
 from .puzzles import cipher
 
 boss_hp = 1500
-boss_attack = (50, 250)  # random attack range
+boss_attack = (50, 390)  # random attack range
 equipped_weapon = None
 equipped_damage = 50  # fists by default
 defeated = False  # ✅ boss state is tracked

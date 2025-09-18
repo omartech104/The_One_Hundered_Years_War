@@ -127,7 +127,7 @@ def combat(enemy):
                 if enemy_attack(enemy):
                     return None, []
         elif des == "2":
-            pass
+            player_heal()
         elif des == "3":
             if random.random() > 0.5:
                 print("You dodged the attack successfully!")

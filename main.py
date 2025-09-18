@@ -98,44 +98,31 @@ while run:
                 # Update map and player position based on city
                 if destination == "London":
                     traveling.current_map = traveling.london_map
-                    traveling.player_pos = (2, 3)  # London start
+                    traveling.player_pos = (2, 3)
                 elif destination == "Paris":
                     traveling.current_map = traveling.paris_map
-                    traveling.player_pos = (2, 3)  # Paris start
+                    traveling.player_pos = (2, 3)
                 elif destination == "Cairo":
                     traveling.current_map = traveling.cairo_map
-                    traveling.player_pos = (2, 3)  # Cairo start
+                    traveling.player_pos = (2, 3)
 
                 print(f"You have traveled to {destination}.")
                 print(f"Do you want to view {destination}'s map (y/n)")
                 map_input = input("# ")
                 if map_input == "y":
-                    if destination == "London":
-                            draw()
-                            for row in traveling.cairo_map:
-                                print(" ".join(traveling.symbols[tile] for tile in row))
-                            draw()
-                    elif destination == "Paris":
-                            draw()
-                            for row in traveling.cairo_map:
-                                print(" ".join(traveling.symbols[tile] for tile in row))
-                            draw()
-                    elif destination == "Cairo":
-                            draw()
-                            for row in traveling.cairo_map:
-                                print(" ".join(traveling.symbols[tile] for tile in row))
-                            draw()
-                    else:
-                        pass
+                    draw()
+                    for row in traveling.current_map:
+                        print(" ".join(traveling.symbols[tile] for tile in row))
+                    draw()
             else:
                 print("Invalid city.")
             input("> Press Enter...")
 
         elif action == "2":
             if traveling.current_map == traveling.london_map:
-                traveling.player_pos = (2, 3)  # London start
+                traveling.player_pos = (2, 3)
             elif traveling.current_map == traveling.paris_map:
-                traveling.player_pos = (2, 3)  # Paris start
+                traveling.player_pos = (2, 3)
             elif traveling.current_map == traveling.cairo_map:
                 traveling.player_pos = (3, 2)
 
@@ -159,10 +146,14 @@ while run:
                 print(result)
 
                 NPC.check_for_npcs(traveling.current_city, traveling.get_current_tile())
-                defeated_enemy, looted_items = fighting.check_for_enemy()
 
-                if defeated_enemy:
-                    for q_name in quest.quests.keys():
+                # Trigger quest enemy if present
+                quest_enemy_fought = False
+                for q_name in quest.quests.keys():
+                    enemy_name = quest.trigger_quest_enemy(q_name, traveling.current_city, traveling.get_current_tile())
+                    if enemy_name:
+                        enemy_obj = fighting.Enemy(enemy_name)
+                        defeated_enemy, looted_items = fighting.combat(enemy_obj)
                         quest.check_quest_progress(
                             q_name,
                             traveling.current_city,
@@ -170,20 +161,53 @@ while run:
                             defeated_enemy,
                             looted_items,
                         )
+                        quest_enemy_fought = True
+                        break
+
+                # Only check for random enemies if no quest enemy was fought
+                if not quest_enemy_fought:
+                    defeated_enemy, looted_items = fighting.check_for_enemy()
+                    if defeated_enemy:
+                        for q_name in quest.quests.keys():
+                            quest.check_quest_progress(
+                                q_name,
+                                traveling.current_city,
+                                traveling.get_current_tile(),
+                                defeated_enemy,
+                                looted_items,
+                            )
+
             elif direction == "F":
                 traveling.fast_travel()
                 NPC.check_for_npcs(traveling.current_city, traveling.get_current_tile())
-                defeated_enemy, looted_items = fighting.check_for_enemy()
 
-                if defeated_enemy:
-                    for q_name in quest.quests.keys():
+                quest_enemy_fought = False
+                for q_name in quest.quests.keys():
+                    enemy_name = quest.trigger_quest_enemy(q_name, traveling.current_city, traveling.get_current_tile())
+                    if enemy_name:
+                        enemy_obj = fighting.Enemy(enemy_name)
+                        defeated_enemy, looted_items = fighting.combat(enemy_obj)
                         quest.check_quest_progress(
                             q_name,
                             traveling.current_city,
                             traveling.get_current_tile(),
                             defeated_enemy,
                             looted_items,
-                )
+                        )
+                        quest_enemy_fought = True
+                        break
+
+                if not quest_enemy_fought:
+                    defeated_enemy, looted_items = fighting.check_for_enemy()
+                    if defeated_enemy:
+                        for q_name in quest.quests.keys():
+                            quest.check_quest_progress(
+                                q_name,
+                                traveling.current_city,
+                                traveling.get_current_tile(),
+                                defeated_enemy,
+                                looted_items,
+                            )
             else:
                 print("Invalid direction.")
             input("> Press Enter...")
@@ -195,6 +219,3 @@ while run:
         elif action == "6":
             play = False
             menu = True
-
-
-#couldnt't fix the quest error, sorry :(
