@@ -125,7 +125,8 @@ while run:
                 traveling.player_pos = (2, 3)
             elif traveling.current_map == traveling.cairo_map:
                 traveling.player_pos = (3, 2)
-
+            print(f"You're in the heart of {traveling.current_map}")
+            input("> Press Enter...")
         elif action == "3":
             shopping.open_shop()
 

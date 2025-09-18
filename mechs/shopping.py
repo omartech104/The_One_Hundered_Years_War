@@ -11,7 +11,8 @@ shops = {
         "Market": {
             "A loaf of bread": {"price": 5, "desc": "Baked in a simple oven.", "stock": 5},
             "Astrolabe": {"price": 400, "desc": "A insturment of navigation.", "stock": 5},
-            "Gemstone": {"price": 800, "desc": "A rare gemstone", "stock": 1}
+            "Gemstone": {"price": 800, "desc": "A rare gemstone", "stock": 1},
+            "Health Potion": {"price": 450, "desc": "A potion for restoring health", "stock": 6}
         },
         "Armory": {
             "Longsword": {"price": 80, "desc": "A strong blade favored by knights.", "damage": 300, "stock": 2},
@@ -42,7 +43,7 @@ shops = {
             "A copy of matn al-ajrumiyyah": {"price": 100, "desc": "A rare copy of matn al-ajrumiyyah.", "stock": 1}
         },
         "Armory": {
-            "Scimitar": {"price": 85, "desc": "A curved sword, swift and sharp.", "damage": 270, "stock": 2},
+            "Shamshir": {"price": 85, "desc": "A curved sword, swift and sharp.", "damage": 270, "stock": 2},
             "Spear": {"price": 60, "desc": "Simple but effective in battle.", "damage": 240, "stock": 3},
             "Composite Bow": {"price": 95, "desc": "Strong bow with great range.", "damage": 280, "stock": 2},
             "Khopesh": {"price": 120, "desc": "An ancient Egyptian sickle-sword.", "damage": 360, "stock": 1},

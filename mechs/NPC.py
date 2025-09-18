@@ -84,6 +84,9 @@ landmark_weights = {
     "Road": 1,
     "Louvre": 3,
     "Pyramids": 3,
+    "Cairo": 5,
+    "London": 5,
+    "Paris": 5
 }
 
 
