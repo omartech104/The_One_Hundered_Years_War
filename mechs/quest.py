@@ -11,9 +11,9 @@ quests = {
         ),
         "objective": {
             "city": "Paris",
-            "tile": "Louvre",
-            "enemy": "Bandit",
-            "item": "Bandit Loot",
+            "tile": "Cathedral",
+            "enemy": "Templar",
+            "item": "Ancient Relic",
         },
         "reward": {
             "gold": 300,
@@ -22,15 +22,20 @@ quests = {
         },
         "completed": False,
     },
-    "Missing ring": {
-        "name": "The Missing ring",
+    "Missing Ring": {
+        "name": "The Missing Ring",
         "giver": "Fatima The Merchant",  # NPC
         "location": ("Cairo", "Bazaar"),  # City and tile
         "description": (
-            "In Bazaar, You find Fatima the Merchant "
-            "A golden ring has been stolen by a thief and hidden in the citadel."
+            "In the Bazaar, you find Fatima the Merchant. "
+            "A golden ring has been stolen by a thief and hidden in the Citadel."
         ),
-        "objective": {"city": "Cairo", "tile": "Citadel", "enemy": "Thief", "item": "Golden Ring"},
+        "objective": {
+            "city": "Cairo",
+            "tile": "Bazaar",
+            "enemy": "Thief",
+            "item": "Golden Ring",
+        },
         "reward": {
             "gold": 450,
             "items": ["A Ruby"],
@@ -38,7 +43,323 @@ quests = {
         },
         "completed": False,
     },
+    "Smuggled Goods": {
+        "name": "Smuggled Goods",
+        "giver": "Captain Rowley",
+        "location": ("London", "Docks"),
+        "description": (
+            "Captain Rowley has discovered smugglers hiding contraband in the London Docks. "
+            "Recover the stolen cargo before it disappears."
+        ),
+        "objective": {
+            "city": "London",
+            "tile": "Docks",
+            "enemy": "Thief",
+            "item": "Stolen Cargo",
+        },
+        "reward": {
+            "gold": 250,
+            "items": ["Bottle of Rum"],
+            "message": "The docks are safer thanks to you.",
+        },
+        "completed": False,
+    },
+    "Crossroad Ambush": {
+        "name": "Crossroad Ambush",
+        "giver": "Sir Aldred",
+        "location": ("London", "Crossroad"),
+        "description": (
+            "Travelers have been ambushed at the London Crossroad. "
+            "Sir Aldred asks you to deal with the bandits causing trouble."
+        ),
+        "objective": {
+            "city": "London",
+            "tile": "Crossroad",
+            "enemy": "Bandit",
+            "item": "Bandit Blade",
+        },
+        "reward": {
+            "gold": 320,
+            "items": ["Steel Dagger"],
+            "message": "The people can travel freely again.",
+        },
+        "completed": False,
+    },
+    "Castle Intruder": {
+        "name": "Castle Intruder",
+        "giver": "Lady Eleanor",
+        "location": ("London", "Castle"),
+        "description": (
+            "Lady Eleanor has heard of Templar spies hiding in the Castle. "
+            "She tasks you with rooting them out."
+        ),
+        "objective": {
+            "city": "London",
+            "tile": "Castle",
+            "enemy": "Templar",
+            "item": "Templar Insignia",
+        },
+        "reward": {
+            "gold": 500,
+            "items": ["Emerald Brooch"],
+            "message": "You have secured the castle’s honor.",
+        },
+        "completed": False,
+    },
+    "Tavern Brawl": {
+        "name": "Tavern Brawl",
+        "giver": "Innkeeper Martin",
+        "location": ("Paris", "Tavern"),
+        "description": (
+            "The Paris Tavern has become dangerous. "
+            "Bandits are harassing the patrons late at night."
+        ),
+        "objective": {
+            "city": "Paris",
+            "tile": "Tavern",
+            "enemy": "Bandit",
+            "item": "Broken Mug",
+        },
+        "reward": {
+            "gold": 180,
+            "items": ["Fine Ale"],
+            "message": "Peace has returned to the tavern.",
+        },
+        "completed": False,
+    },
+    "Gatehouse Thief": {
+        "name": "Gatehouse Thief",
+        "giver": "Guard Henri",
+        "location": ("Paris", "Gatehouse"),
+        "description": (
+            "Guard Henri reports thieves sneaking past the Paris Gatehouse. "
+            "Catch one and recover stolen coins."
+        ),
+        "objective": {
+            "city": "Paris",
+            "tile": "Gatehouse",
+            "enemy": "Thief",
+            "item": "Stolen Coins",
+        },
+        "reward": {
+            "gold": 220,
+            "items": ["Silver Buckle"],
+            "message": "The city treasury is safe once more.",
+        },
+        "completed": False,
+    },
+    "Defender of the Faith": {
+        "name": "Defender of the Faith",
+        "giver": "Archbishop Louis",
+        "location": ("Paris", "Cathedral"),
+        "description": (
+            "The Archbishop fears Templar influence in the Cathedral. "
+            "He asks you to confront them and recover sacred texts."
+        ),
+        "objective": {
+            "city": "Paris",
+            "tile": "Cathedral",
+            "enemy": "Templar",
+            "item": "Sacred Texts",
+        },
+        "reward": {
+            "gold": 600,
+            "items": ["Blessed Cross"],
+            "message": "You have defended the holy word.",
+        },
+        "completed": False,
+    },
+    "Oasis Raid": {
+        "name": "Oasis Raid",
+        "giver": "Nomad Elder",
+        "location": ("Cairo", "Oasis"),
+        "description": (
+            "A group of bandits has raided the Cairo Oasis, stealing precious water skins. "
+            "The nomads ask for your help."
+        ),
+        "objective": {
+            "city": "Cairo",
+            "tile": "Oasis",
+            "enemy": "Bandit",
+            "item": "Water Skins",
+        },
+        "reward": {
+            "gold": 275,
+            "items": ["Leather Waterskin"],
+            "message": "The desert people are grateful for your aid.",
+        },
+        "completed": False,
+    },
+    "Citadel Intrigue": {
+        "name": "Citadel Intrigue",
+        "giver": "Vizier Khalid",
+        "location": ("Cairo", "Citadel"),
+        "description": (
+            "The Citadel is rumored to be infiltrated by Templars. "
+            "The Vizier commands you to eliminate their spies."
+        ),
+        "objective": {
+            "city": "Cairo",
+            "tile": "Citadel",
+            "enemy": "Templar",
+            "item": "Spy Reports",
+        },
+        "reward": {
+            "gold": 550,
+            "items": ["Jeweled Dagger"],
+            "message": "The Citadel remains strong under your protection.",
+        },
+        "completed": False,
+    },
+    "Bazaar Pickpocket": {
+        "name": "Bazaar Pickpocket",
+        "giver": "Shopkeeper Layla",
+        "location": ("Cairo", "Bazaar"),
+        "description": (
+            "Pickpockets plague the Cairo Bazaar. "
+            "Layla asks you to recover her stolen necklace."
+        ),
+        "objective": {
+            "city": "Cairo",
+            "tile": "Bazaar",
+            "enemy": "Thief",
+            "item": "Silver Necklace",
+        },
+        "reward": {
+            "gold": 200,
+            "items": ["Spice Pouch"],
+            "message": "The Bazaar is safe for merchants once more.",
+        },
+        "completed": False,
+    },
+    "Highway Robbery": {
+        "name": "Highway Robbery",
+        "giver": "Merchant Thomas",
+        "location": ("London", "Crossroad"),
+        "description": (
+            "Bandits ambush travelers at the London Crossroad. "
+            "Merchant Thomas begs for protection."
+        ),
+        "objective": {
+            "city": "London",
+            "tile": "Crossroad",
+            "enemy": "Bandit",
+            "item": "Merchant’s Ledger",
+        },
+        "reward": {
+            "gold": 260,
+            "items": ["Travel Cloak"],
+            "message": "The roads are safe for trade once again.",
+        },
+        "completed": False,
+    },
+    "Stolen Cargo": {
+        "name": "Stolen Cargo",
+        "giver": "Dockmaster Hugh",
+        "location": ("London", "Docks"),
+        "description": (
+            "Dockmaster Hugh has reported missing cargo. "
+            "Thieves at the docks are the likely culprits."
+        ),
+        "objective": {
+            "city": "London",
+            "tile": "Docks",
+            "enemy": "Thief",
+            "item": "Crate of Spices",
+        },
+        "reward": {
+            "gold": 300,
+            "items": ["Sailor’s Compass"],
+            "message": "Trade can flourish again.",
+        },
+        "completed": False,
+    },
+    "Knight’s Oath": {
+        "name": "Knight’s Oath",
+        "giver": "Sir Geoffrey",
+        "location": ("London", "Castle"),
+        "description": (
+            "Sir Geoffrey swears the honor of the realm is threatened by Templars in the Castle. "
+            "He entrusts you with restoring order."
+        ),
+        "objective": {
+            "city": "London",
+            "tile": "Castle",
+            "enemy": "Templar",
+            "item": "Knight’s Seal",
+        },
+        "reward": {
+            "gold": 480,
+            "items": ["Silver Gauntlet"],
+            "message": "The realm’s honor is preserved.",
+        },
+        "completed": False,
+    },
+    "Drunken Raiders": {
+        "name": "Drunken Raiders",
+        "giver": "Barkeep Roland",
+        "location": ("Paris", "Tavern"),
+        "description": (
+            "Bandits drunk on stolen ale cause chaos in the Paris Tavern. "
+            "Roland pleads for your help."
+        ),
+        "objective": {
+            "city": "Paris",
+            "tile": "Tavern",
+            "enemy": "Bandit",
+            "item": "Stolen Ale",
+        },
+        "reward": {
+            "gold": 190,
+            "items": ["Iron Tankard"],
+            "message": "The tavern returns to peace.",
+        },
+        "completed": False,
+    },
+    "City Gate Break-in": {
+        "name": "City Gate Break-in",
+        "giver": "Captain Lucien",
+        "location": ("Paris", "Gatehouse"),
+        "description": (
+            "Thieves plan to break into the city through the Paris Gatehouse. "
+            "Captain Lucien asks you to stop them."
+        ),
+        "objective": {
+            "city": "Paris",
+            "tile": "Gatehouse",
+            "enemy": "Thief",
+            "item": "Lockpicks",
+        },
+        "reward": {
+            "gold": 240,
+            "items": ["Bronze Shield"],
+            "message": "The gates remain secure.",
+        },
+        "completed": False,
+    },
+    "Desert Justice": {
+        "name": "Desert Justice",
+        "giver": "Sheikh Omar",
+        "location": ("Cairo", "Oasis"),
+        "description": (
+            "Bandits terrorize caravans resting at the Cairo Oasis. "
+            "Sheikh Omar demands they be punished."
+        ),
+        "objective": {
+            "city": "Cairo",
+            "tile": "Oasis",
+            "enemy": "Bandit",
+            "item": "Caravan Goods",
+        },
+        "reward": {
+            "gold": 310,
+            "items": ["Gold Bracelet"],
+            "message": "Justice is served in the desert.",
+        },
+        "completed": False,
+    },
 }
+
 
 
 def start_quest(quest_name):
