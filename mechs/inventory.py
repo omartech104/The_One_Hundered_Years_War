@@ -8,6 +8,7 @@ def view_inventory():
         print(f"Remaining Gold: {shopping.player_gold}")
         print()
         print("Your inventory contains:")
+
         for idx, item in enumerate(inv, 1):
             print(f"{idx}. {item}")
 

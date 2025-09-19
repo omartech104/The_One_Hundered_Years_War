@@ -1,7 +1,9 @@
-from mechs import traveling
+from mechs import traveling, badges
 
 # Example player variables
 player_gold = 500
+unlocked_badges = badges.badges
+
 inventory = []
 
 

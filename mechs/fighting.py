@@ -1,5 +1,5 @@
 import random
-from mechs import traveling, shopping, inventory
+from mechs import traveling, shopping, inventory, badges
 
 # player stats
 player_hp = 1500
@@ -70,6 +70,9 @@ def equip_weapon():
             if "Armory" in city and weapon in city["Armory"]:
                 equipped_weapon = weapon
                 player_dp = city["Armory"][weapon]["damage"]
+                if badges.badges[0]["unlocked"]:
+                    player_dp += 40
+                    print("Damage boost applied")
                 print(f"\nYou equipped the {weapon}! Damage set to {player_dp}")
                 return
     else:
@@ -85,7 +88,10 @@ def player_attack(enemy):
     print(f"You hit the {enemy.kind} with {equipped_weapon or 'fists'} for {damage} damage!")
     if enemy.hp <= 0:
         print(f"The {enemy.kind} has been slain!")
+        if enemy.kind == "Bandit":
+            badges.badges[0]["unlocked"] = True
         return True
+        
     return False
 
 def player_heal():
