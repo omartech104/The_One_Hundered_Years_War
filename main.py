@@ -65,11 +65,57 @@ while run:
         print(traveling.get_tile_description())
 
         NPC.check_for_npcs(traveling.current_city, traveling.get_current_tile())
-        if (traveling.current_city, traveling.get_current_tile()) == ("Paris", "Cathedral"):
-            quest.start_quest("Lost Relic")
+    if (traveling.current_city, traveling.get_current_tile()) == ("Paris", "Cathedral"):
+        start_quest("Lost Relic")
 
-        if (traveling.current_city, traveling.get_current_tile()) == ("Cairo", "Bazaar"):
-            quest.start_quest("Missing ring")
+    if (traveling.current_city, traveling.get_current_tile()) == ("Cairo", "Bazaar"):
+        start_quest("Missing Ring")
+
+    if (traveling.current_city, traveling.get_current_tile()) == ("London", "Docks"):
+        start_quest("Smuggled Goods")
+
+    if (traveling.current_city, traveling.get_current_tile()) == ("London", "Crossroad"):
+        start_quest("Crossroad Ambush")
+
+    if (traveling.current_city, traveling.get_current_tile()) == ("London", "Castle"):
+        start_quest("Castle Intruder")
+
+    if (traveling.current_city, traveling.get_current_tile()) == ("Paris", "Tavern"):
+        start_quest("Tavern Brawl")
+
+    if (traveling.current_city, traveling.get_current_tile()) == ("Paris", "Gatehouse"):
+        start_quest("Gatehouse Thief")
+
+    if (traveling.current_city, traveling.get_current_tile()) == ("Paris", "Cathedral"):
+        start_quest("Defender of the Faith")
+
+    if (traveling.current_city, traveling.get_current_tile()) == ("Cairo", "Oasis"):
+        start_quest("Oasis Raid")
+
+    if (traveling.current_city, traveling.get_current_tile()) == ("Cairo", "Citadel"):
+        start_quest("Citadel Intrigue")
+
+    if (traveling.current_city, traveling.get_current_tile()) == ("Cairo", "Bazaar"):
+        start_quest("Bazaar Pickpocket")
+
+    if (traveling.current_city, traveling.get_current_tile()) == ("London", "Crossroad"):
+        start_quest("Highway Robbery")
+
+    if (traveling.current_city, traveling.get_current_tile()) == ("London", "Docks"):
+        start_quest("Stolen Cargo")
+
+    if (traveling.current_city, traveling.get_current_tile()) == ("London", "Castle"):
+        start_quest("Knight’s Oath")
+
+    if (traveling.current_city, traveling.get_current_tile()) == ("Paris", "Tavern"):
+        start_quest("Drunken Raiders")
+
+    if (traveling.current_city, traveling.get_current_tile()) == ("Paris", "Gatehouse"):
+        start_quest("City Gate Break-in")
+
+    if (traveling.current_city, traveling.get_current_tile()) == ("Cairo", "Oasis"):
+        start_quest("Desert Justice")
+
 
         draw()
         print()

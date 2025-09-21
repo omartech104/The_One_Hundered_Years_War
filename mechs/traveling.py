@@ -7,27 +7,38 @@ symbols = {
     "empty": " ",
     "Road": "▪",
     "Crossroad": "+",
-    "Armory": "S",
-    "Market": "A",
-    "Bazaar": "S",
-    "Tower": "T",
-    "Bridge": "B",
+    
+    # London area
     "London": "L",
-    "Castle": "K",
+    "Castle": "K",     # Keep 'K' for Castle
     "Docks": "D",
-    "Gatehouse": "G",
-    "Louvre": "L",
+    "Gatehouse": "H",  # H = House, avoids clash
+    
+    # Paris area
     "Paris": "P",
+    "Louvre": "V",     # V from LouVre
     "Cathedral": "C",
-    "Tavern": "G",
+    "Tavern": "T",
     "Inn": "I",
+    
+    # Cairo area
+    "Cairo": "R",      # R from CaiRo
     "Mosque": "M",
-    "Cairo": "C",
-    "Pyramids": "G",
-    "Citadel": "G",
+    "Pyramids": "Y",   # Y from pYramids
+    "Citadel": "Z",    # Z = citadel stronghold
     "Oasis": "O",
-    "Caravanserai": "G"
+    "Caravanserai": "N", # N = iNn/caravaN, avoids G
+    
+    # Common locations
+    "Armory": "A",
+    "Market": "M",     # ⚠ clash with Mosque, so change:
+    "Market": "E",     # E = ExchangE
+    "Bazaar": "B",
+    "Tower": "W",      # W from toWer
+    "Bridge": "R"      # ⚠ clash with Cairo, so change:
+    "Bridge": "B"      # but Bazaar already B → make Bridge = "X"
 }
+
 
 # London Map (7x7)
 london_map = [
