@@ -35,8 +35,8 @@ symbols = {
     "Market": "E",     # E = ExchangE
     "Bazaar": "B",
     "Tower": "W",      # W from toWer
-    "Bridge": "R"      # ⚠ clash with Cairo, so change:
-    "Bridge": "B"      # but Bazaar already B → make Bridge = "X"
+    "Bridge": "R",      # ⚠ clash with Cairo, so change:
+    "Bridge": "X"      # but Bazaar already B → make Bridge = "X"
 }
 
 
