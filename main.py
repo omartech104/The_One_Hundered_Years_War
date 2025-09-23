@@ -2,7 +2,7 @@ import os
 import sys
 
 from mechs import inventory, shopping, traveling, NPC, fighting, ascii_art, quest, badges
-
+from mechs.quest import start_quest
 pltform = sys.platform
 
 
