@@ -373,17 +373,19 @@ def start_quest(quest_name):
 
 def check_quest_progress(quest_name, city, tile, defeated_enemy, looted_items):
     quest = quests.get(quest_name)
-    if not quest or quest["completed"]:
-        print("quest isnt triggered")
+
+    if not quest or quest.get("completed"):
+        print("Quest isn't triggered or already completed.")
         print(defeated_enemy)
         print(looted_items)
-    # here ^^^^
+        return  # Exit early to avoid errors
 
     obj = quest["objective"]
     if city == obj["city"] and tile == obj["tile"] and defeated_enemy == obj["enemy"]:
         if obj["item"] in looted_items:
-            print(f"\n Quest Update: You recovered the {obj['item']}!")
+            print(f"\nQuest Update: You recovered the {obj['item']}!")
             complete_quest(quest_name)
+
 
 
 def complete_quest(quest_name):
