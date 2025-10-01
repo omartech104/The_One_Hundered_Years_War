@@ -216,8 +216,7 @@ quests = {
         "giver": "Shopkeeper Layla",
         "location": ("Cairo", "Bazaar"),
         "description": (
-            "Pickpockets plague the Cairo Bazaar. "
-            "Layla asks you to recover her stolen necklace."
+            "Pickpockets plague the Cairo Bazaar. " "Layla asks you to recover her stolen necklace."
         ),
         "objective": {
             "city": "Cairo",
@@ -361,38 +360,43 @@ quests = {
 }
 
 
-
 def start_quest(quest_name):
     quest = quests.get(quest_name)
     if quest and not quest["completed"]:
         print(f"\n Quest Started: {quest['name']}")
         print(quest["description"])
+    elif quest and quest["completed"]:
+        print("This quest is already completed.")
     else:
-        print("This quest is not available or already completed.")
+        print("This quest is not available")
 
 
 def check_quest_progress(quest_name, city, tile, defeated_enemy, looted_items):
     quest = quests.get(quest_name)
+    if not quest:
+        print("This quest does not exist.")
+        return
 
-    if not quest or quest.get("completed"):
-        print("Quest isn't triggered or already completed.")
-        print(defeated_enemy)
-        print(looted_items)
-        return  # Exit early to avoid errors
+    if quest["completed"]:
+        print(f"[{quest_name}] - Already Completed")
+        return
 
     obj = quest["objective"]
     if city == obj["city"] and tile == obj["tile"] and defeated_enemy == obj["enemy"]:
         if obj["item"] in looted_items:
             print(f"\nQuest Update: You recovered the {obj['item']}!")
             complete_quest(quest_name)
-
+        else:
+            print(f"[{quest_name}] - Enemy defeated, but you didn’t find the {obj['item']} yet.")
+    else:
+        print(f"[{quest_name}] - In Progress")
 
 
 def complete_quest(quest_name):
     quest = quests.get(quest_name)
     if quest and not quest["completed"]:
         quest["completed"] = True
-        
+
         reward = quest["reward"]
 
         shopping.player_gold += reward["gold"]
@@ -403,10 +407,12 @@ def complete_quest(quest_name):
         print(reward["message"])
         print(f"You received {reward['gold']} gold and items: {', '.join(reward['items'])}")
 
+
 def quest_log():
     for name, quest in quests.items():
         status = "Completed" if quest["completed"] else "In Progress"
         print(f"{quest['name']} - {status}")
+
 
 def trigger_quest_enemy(quest_name, city, tile):
     quest = quests.get(quest_name)
