@@ -1,9 +1,11 @@
-from mechs import fighting
+def get_fighting_module():
+    from mechs import fighting
+    return fighting
 badges = [
     {
         "name": "Bandit Breaker",
         "desc": "Earned by crushing a ruthless bandit in battle. Your strikes now carry legendary force.",
-        "boost": lambda: fighting.player_dp + 40,
+        "boost": lambda: get_fighting_module().player_dp + 40,
         "unlocked": False
     },
     {

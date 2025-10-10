@@ -1,4 +1,4 @@
-from mechs import traveling, badges
+from mechs import badges
 
 # Example player variables
 player_gold = 500
@@ -56,6 +56,7 @@ shops = {
 
 
 def open_shop():
+    from mechs import traveling
     global player_gold, inventory
 
     city = traveling.current_city
