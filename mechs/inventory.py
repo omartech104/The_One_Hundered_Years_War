@@ -78,4 +78,5 @@ def use_item(item):
 
     # If nothing matched
     print(f"{item} cannot be used.")
-
+def sell_item(item):
+    pass
