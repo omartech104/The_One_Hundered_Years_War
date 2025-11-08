@@ -1,36 +1,49 @@
 from mechs import fighting, shopping
-
 from .puzzles import cipher
 
 
 # View inventory and optionally use items
+
 def view_inventory():
+    from mechs.inventory import sell_item, use_item  # assuming use_item exists
+    import mechs.shopping
+    import mechs.fighting
+
     inv = shopping.inventory
-    if inv:
-        print(f"Your HP: {fighting.player_hp}")
-        print(f"Remaining Gold: {shopping.player_gold}")
-        print()
-        print("Your inventory contains:")
 
-        for idx, item in enumerate(inv, 1):
-            print(f"{idx}. {item}")
+    if not inv:
+        print("Your inventory is empty.")
+        return
 
-        print("\nDo you want to use an item? (y/n)")
-        choice = input("> ").lower()
+    print(f"Your HP: {fighting.player_hp}")
+    print(f"Remaining Gold: {shopping.player_gold}\n")
+    print("Your inventory contains:")
 
-        if choice == "y":
-            item_choice = input("Enter item number: ")
-            if item_choice.isdigit():
-                item_choice = int(item_choice) - 1
-                if 0 <= item_choice < len(inv):
-                    use_item(inv[item_choice])
-                else:
-                    print("Invalid choice.")
-            else:
-                print("Invalid input.")
-    else:
-        print("Your inventory is empty")
+    for idx, item in enumerate(inv, 1):
+        print(f"{idx}. {item}")
 
+    print("\nDo you want to use an item or sell an item? (use/sell)")
+    choice = input("> ").strip().lower()
+
+    if choice not in ["use", "sell"]:
+        print("Invalid choice.")
+        return
+
+    item_choice = input("Enter item number: ").strip()
+
+    if not item_choice.isdigit():
+        print("Invalid input. Please enter a number.")
+        return
+
+    item_choice = int(item_choice) - 1
+    if not (0 <= item_choice < len(inv)):
+        print("Invalid choice.")
+        return
+
+    if choice == "use":
+        use_item(inv[item_choice])
+    elif choice == "sell":
+        sell_item(inv[item_choice])
 
 content = cipher.encrypted_message
 letter_content = "You've finished the game"
@@ -85,7 +98,10 @@ def use_item(item):
     print(f"{item} cannot be used.")
 
 
+
+
 def sell_item(item):
+    import mechs.shopping as shopping
     inv = shopping.inventory
     shops = shopping.shops
 
@@ -104,17 +120,16 @@ def sell_item(item):
     base_price = 0
     for city in shops.values():
         for shop_type, shop_items in city.items():
-            if isinstance(shop_items, dict):
-                # shop_items like {"Bread": 100, "Wine": 200}
-                if item in shop_items:
-                    base_price = shop_items[item]
-                    break
-            elif isinstance(shop_items, list):
-                # if shop_items is a list, assume a flat default price
-                if item in shop_items:
-                    base_price = 100  # fallback default
-                    break
-        if base_price != 0:
+            if isinstance(shop_items, dict) and item in shop_items:
+                item_data = shop_items[item]
+                if isinstance(item_data, dict) and "price" in item_data:
+                    base_price = item_data["price"]
+                elif isinstance(item_data, (int, float)):
+                    base_price = item_data
+                else:
+                    base_price = 0
+                break
+        if base_price:
             break
 
     # 4. Handle items with no base price
@@ -123,14 +138,10 @@ def sell_item(item):
         return
 
     # 5. Calculate sell value
-    sell_multiplier = 0.5  # Merchant buys for half price
-    try:
-        selling_price = int(int(base_price) * float(sell_multiplier))
-    except (TypeError, ValueError):
-        print("Error: Invalid price data for this item.")
-        return
+    sell_multiplier = 0.5
+    selling_price = int(base_price * sell_multiplier)
 
-    # 6. Ask if player wants to sell more than one (optional)
+    # 6. Handle quantity
     count_in_inventory = inv.count(item)
     if count_in_inventory > 1:
         print(f"You have {count_in_inventory} of {item}. How many do you want to sell?")
@@ -147,18 +158,18 @@ def sell_item(item):
 
     total_price = selling_price * quantity
 
-    # 7. Confirm transaction
+    # 7. Confirm sale
     print(f"Sell {quantity}x {item} for {total_price} gold? (y/n)")
     choice = input("> ").strip().lower()
-
     if choice != "y":
         print("Sale cancelled.")
         return
 
-    # 8. Process transaction
+    # 8. Apply transaction
     for _ in range(quantity):
         inv.remove(item)
-    shopping.player_gold += total_price
+
+    shopping.player_gold = int(shopping.player_gold) + total_price
 
     print(f"You sold {quantity}x {item} for {total_price} gold.")
     print(f"Remaining Gold: {shopping.player_gold}")

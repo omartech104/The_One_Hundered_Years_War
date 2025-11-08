@@ -60,8 +60,6 @@ def open_shop():
     global player_gold, inventory
 
     city = traveling.current_city
-
-    # Player chooses which shop
     shop_type = None
     if city == "Cairo":
         shop_type = input("Do you want to visit the Bazaar or Armory? ").capitalize()
