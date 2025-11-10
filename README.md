@@ -89,8 +89,8 @@ Please keep consistent formatting and add docstrings where needed.
 ---
 
 ## 📄 License  
-🪶 This project is open source.  
-If you haven’t added a license yet, consider using the **MIT License**.
+🪶 Licensed under the **MIT License** — you’re free to use, modify, and distribute this software, as long as proper credit is given.  
+See the [LICENSE](LICENSE) file for full terms.
 
 ---
 
