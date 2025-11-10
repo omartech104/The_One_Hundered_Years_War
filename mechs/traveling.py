@@ -7,6 +7,10 @@ symbols = {
     "empty": " ",
     "Road": "▪",
     "Crossroad": "+",
+
+    "Prague": "G",      # G from "Gothic" (or just unique letter)
+    "Venice": "V",      # V from Venice
+    "Tours": "U" ,
     
     # London area
     "London": "L",
@@ -73,6 +77,40 @@ cairo_map = [
     ["Road", "Road", "Road", "Crossroad", "Road", "Road", "Road"]
 ]
 
+# Prague Map
+prague_map = [
+    ["Road", "Road", "Road", "Crossroad", "Road", "Road", "Road"],
+    ["Road", "Tower", "Road", "Road", "Road", "Market", "Bridge"],
+    ["Road", "Road", "Crossroad", "Prague", "Crossroad", "Road", "Road"],
+    ["Road", "Castle", "Road", "Crossroad", "Road", "Cathedral", "Road"],
+    ["Road", "Road", "Road", "Crossroad", "Road", "Road", "Road"],
+    ["Road", "Gatehouse", "Road", "Road", "Road", "Inn", "Road"],
+    ["Road", "Road", "Road", "Crossroad", "Road", "Road", "Road"]
+]
+
+# Venice Map
+venice_map = [
+    ["Road", "Road", "Road", "Crossroad", "Road", "Road", "Road"],
+    ["Road", "Docks", "Road", "Road", "Road", "Market", "Bridge"],
+    ["Road", "Road", "Crossroad", "Venice", "Crossroad", "Road", "Road"],
+    ["Road", "Palazzo", "Road", "Crossroad", "Road", "Cathedral", "Road"],
+    ["Road", "Road", "Road", "Crossroad", "Road", "Road", "Road"],
+    ["Road", "Gatehouse", "Road", "Road", "Road", "Inn", "Road"],
+    ["Road", "Road", "Road", "Crossroad", "Road", "Road", "Road"]
+]
+
+# Tours Map
+tours_map = [
+    ["Road", "Road", "Road", "Crossroad", "Road", "Road", "Road"],
+    ["Road", "Tower", "Road", "Road", "Road", "Market", "Bridge"],
+    ["Road", "Road", "Crossroad", "Tours", "Crossroad", "Road", "Road"],
+    ["Road", "Castle", "Road", "Crossroad", "Road", "Cathedral", "Road"],
+    ["Road", "Road", "Road", "Crossroad", "Road", "Road", "Road"],
+    ["Road", "Gatehouse", "Road", "Road", "Road", "Inn", "Road"],
+    ["Road", "Road", "Road", "Crossroad", "Road", "Road", "Road"]
+]
+
+
 london_landmarks = [
     {"name": "Tower", "coords": (1, 2)},
     {"name": "Bridge", "coords": (1, 6)},
@@ -102,10 +140,41 @@ cairo_landmarks = [
     {"name": "Caravanserai", "coords": (5, 5)}
 ]
 
+prague_landmarks = [
+    {"name": "Tower", "coords": (1, 1)},
+    {"name": "Bridge", "coords": (1, 6)},
+    {"name": "Prague", "coords": (2, 3)},
+    {"name": "Castle", "coords": (3, 1)},
+    {"name": "Cathedral", "coords": (3, 5)},
+    {"name": "Gatehouse", "coords": (5, 1)},
+    {"name": "Inn", "coords": (5, 5)}
+]
+
+venice_landmarks = [
+    {"name": "Docks", "coords": (1, 1)},
+    {"name": "Bridge", "coords": (1, 6)},
+    {"name": "Venice", "coords": (2, 3)},
+    {"name": "Palazzo", "coords": (3, 1)},
+    {"name": "Cathedral", "coords": (3, 5)},
+    {"name": "Gatehouse", "coords": (5, 1)},
+    {"name": "Inn", "coords": (5, 5)}
+]
+
+tours_landmarks = [
+    {"name": "Tower", "coords": (1, 1)},
+    {"name": "Bridge", "coords": (1, 6)},
+    {"name": "Tours", "coords": (2, 3)},
+    {"name": "Castle", "coords": (3, 1)},
+    {"name": "Cathedral", "coords": (3, 5)},
+    {"name": "Gatehouse", "coords": (5, 1)},
+    {"name": "Inn", "coords": (5, 5)}
+]
+
+
 # Starting location
 current_city = "London"
 player_pos = (2, 3)
-cities = ["London", "Paris", "Cairo"]
+cities = ["London", "Paris", "Cairo", "Prague", "Venice", "Tours"]
 current_map = london_map
 
 
@@ -282,5 +351,31 @@ def fast_travel():
                 new_pos = landmark["coords"]
                 player_pos = new_pos
                 print(player_pos)
+                print(f"You moved to {get_location_name()}.")
+    elif current_city == "Prague":
+        for i, landmark in enumerate(prague_landmarks):
+            print(f"{i} - {landmark['name']}")
+        landmark_num = input("Type the number of the Landmark: ")
+        for i, landmark in enumerate(prague_landmarks):
+            if i == int(landmark_num):
+                player_pos = landmark["coords"]
+                print(f"You moved to {get_location_name()}.")
+
+    elif current_city == "Venice":
+        for i, landmark in enumerate(venice_landmarks):
+            print(f"{i} - {landmark['name']}")
+        landmark_num = input("Type the number of the Landmark: ")
+        for i, landmark in enumerate(venice_landmarks):
+            if i == int(landmark_num):
+                player_pos = landmark["coords"]
+                print(f"You moved to {get_location_name()}.")
+
+    elif current_city == "Tours":
+        for i, landmark in enumerate(tours_landmarks):
+            print(f"{i} - {landmark['name']}")
+        landmark_num = input("Type the number of the Landmark: ")
+        for i, landmark in enumerate(tours_landmarks):
+            if i == int(landmark_num):
+                player_pos = landmark["coords"]
                 print(f"You moved to {get_location_name()}.")
 

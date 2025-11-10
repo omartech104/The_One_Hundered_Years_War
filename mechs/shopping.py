@@ -14,7 +14,8 @@ shops = {
             "A loaf of bread": {"price": 5, "desc": "Baked in a simple oven.", "stock": 5},
             "Astrolabe": {"price": 400, "desc": "A insturment of navigation.", "stock": 5},
             "Gemstone": {"price": 800, "desc": "A rare gemstone", "stock": 1},
-            "Health Potion": {"price": 450, "desc": "A potion for restoring health", "stock": 6}
+            "Health Potion": {"price": 450, "desc": "A potion for restoring health", "stock": 6},
+            "Map Of London": {"price": 10, "desc": "The Map Of London", "stock": 2}
         },
         "Armory": {
             "Longsword": {"price": 80, "desc": "A strong blade favored by knights.", "damage": 300, "stock": 2},
@@ -28,7 +29,8 @@ shops = {
         "Market": {
             "Book": {"price": 30, "desc": "A tome of medieval knowledge.", "stock": 3},
             "Wine": {"price": 20, "desc": "A fine Parisian vintage.", "stock": 5},
-            "Illuminated Manuscript": {"price": 60, "desc": "A missing part of something unknown.", "stock": 1}
+            "Illuminated Manuscript": {"price": 60, "desc": "A missing part of something unknown.", "stock": 1},
+            "Map Of Paris": {"price": 8, "desc": "The Map Of Paris", "stock": 3}
         },
         "Armory": {
             "Rapier": {"price": 90, "desc": "Elegant and deadly fencing blade.", "damage": 250, "stock": 2},
@@ -42,7 +44,8 @@ shops = {
         "Bazaar": {
             "Spices": {"price": 25, "desc": "Exotic spices from the East.", "stock": 5},
             "Halum Cheese": {"price": 50, "desc": "A half pound of local-made Cheese.", "stock": 3},
-            "A copy of matn al-ajrumiyyah": {"price": 100, "desc": "A rare copy of matn al-ajrumiyyah.", "stock": 1}
+            "A copy of matn al-ajrumiyyah": {"price": 100, "desc": "A rare copy of matn al-ajrumiyyah.", "stock": 1},
+            "Map Of Cairo": {"price": 8, "desc": "The Map Of Cairo", "stock": 3}
         },
         "Armory": {
             "Shamshir": {"price": 85, "desc": "A curved sword, swift and sharp.", "damage": 270, "stock": 2},
@@ -50,6 +53,52 @@ shops = {
             "Composite Bow": {"price": 95, "desc": "Strong bow with great range.", "damage": 280, "stock": 2},
             "Khopesh": {"price": 120, "desc": "An ancient Egyptian sickle-sword.", "damage": 360, "stock": 1},
             "Jambiya": {"price": 35, "desc": "A traditional curved dagger.", "damage": 160, "stock": 4}
+        }
+    },
+
+    "Prague": {
+        "Market": {
+            "Medieval Bread": {"price": 5, "desc": "A loaf baked in a Prague bakery.", "stock": 5},
+            "Ale": {"price": 15, "desc": "Locally brewed dark ale.", "stock": 8},
+            "Map Of Prague": {"price": 10, "desc": "The Map Of Prague", "stock": 3},
+            "Amber Necklace": {"price": 100, "desc": "A necklace made from Bohemian amber.", "stock": 2}
+        },
+        "Armory": {
+            "Sword": {"price": 80, "desc": "A sharp sword forged in Bohemia.", "damage": 300, "stock": 2},
+            "War Axe": {"price": 100, "desc": "A heavy axe favored by knights.", "damage": 350, "stock": 2},
+            "Crossbow": {"price": 90, "desc": "Simple crossbow with decent range.", "damage": 280, "stock": 3},
+            "Mace": {"price": 70, "desc": "A crushing weapon for close combat.", "damage": 270, "stock": 2},
+            "Dagger": {"price": 30, "desc": "Quick and deadly in close quarters.", "damage": 150, "stock": 4}
+        }
+    },
+    "Venice": {
+        "Market": {
+            "Glass Beads": {"price": 25, "desc": "Finely made Venetian glass beads.", "stock": 5},
+            "Wine": {"price": 20, "desc": "A local Venetian vintage.", "stock": 6},
+            "Map Of Venice": {"price": 12, "desc": "The Map Of Venice", "stock": 3},
+            "Silk Cloth": {"price": 60, "desc": "Imported silk from the East.", "stock": 2}
+        },
+        "Armory": {
+            "Rapier": {"price": 90, "desc": "Elegant fencing blade from Venice.", "damage": 250, "stock": 2},
+            "Halberd": {"price": 110, "desc": "Used by city guards.", "damage": 370, "stock": 2},
+            "Short Bow": {"price": 60, "desc": "Compact bow, useful in city streets.", "damage": 200, "stock": 3},
+            "Mace": {"price": 70, "desc": "A heavy weapon to break armor.", "damage": 280, "stock": 2},
+            "Dagger": {"price": 35, "desc": "Small and easy to conceal.", "damage": 160, "stock": 4}
+        }
+    },
+    "Tours": {
+        "Market": {
+            "Cheese": {"price": 15, "desc": "Local Tours cheese, creamy and rich.", "stock": 5},
+            "Wine": {"price": 20, "desc": "Fine Loire Valley wine.", "stock": 6},
+            "Map Of Tours": {"price": 8, "desc": "The Map Of Tours", "stock": 3},
+            "Book of Prayers": {"price": 50, "desc": "A religious text used by locals.", "stock": 2}
+        },
+        "Armory": {
+            "Longsword": {"price": 80, "desc": "A strong blade favored by knights.", "damage": 300, "stock": 2},
+            "Battle Axe": {"price": 100, "desc": "Heavy axe for brutal combat.", "damage": 350, "stock": 2},
+            "Crossbow": {"price": 90, "desc": "Standard ranged weapon.", "damage": 280, "stock": 3},
+            "Warhammer": {"price": 120, "desc": "Crush your foes with force.", "damage": 400, "stock": 1},
+            "Dagger": {"price": 30, "desc": "Quick and light.", "damage": 150, "stock": 4}
         }
     }
 }

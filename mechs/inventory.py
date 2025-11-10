@@ -1,4 +1,4 @@
-from mechs import fighting, shopping
+from mechs import fighting, shopping, traveling
 from .puzzles import cipher
 
 
@@ -51,6 +51,8 @@ letter_content = "You've finished the game"
 
 # Handle item usage effects
 def use_item(item):
+    import mechs.shopping
+    import mechs.traveling
     inv = shopping.inventory
 
     # Special quest items first
@@ -89,6 +91,30 @@ def use_item(item):
                     fighting.player_hp = min(fighting.player_hp + 500, 1500)
                     print(f"You used {item} and restored 500 HP. Current HP: {fighting.player_hp}")
                     inv.remove(item)
+                elif "Map Of London" in item:
+                    for row in traveling.current_map:
+                        print(" ".join(traveling.symbols[tile] for tile in row))
+                    input("> Press Enter...")
+                elif "Map Of Paris" in item:
+                    for row in traveling.current_map:
+                        print(" ".join(traveling.symbols[tile] for tile in row))
+                    input("> Press Enter...")
+                elif "Map Of Cairo" in item:
+                    for row in traveling.current_map:
+                        print(" ".join(traveling.symbols[tile] for tile in row))
+                    input("> Press Enter...")
+                elif "Map Of Prague" in item:
+                    for row in traveling.current_map:
+                        print(" ".join(traveling.symbols[tile] for tile in row))
+                    input("> Press Enter")
+                elif "Map Of Venice" in item:
+                    for row in traveling.current_map:
+                        print(" ".join(traveling.symbols[tile] for tile in row))
+                    input("> Press Enter")
+                elif "Map Of Tours" in item:
+                    for row in traveling.current_map:
+                        print(" ".join(traveling.symbols[tile] for tile in row))
+                    input("> Press Enter")
                 else:
                     print(f"You used {item}, but nothing happened...")
 
