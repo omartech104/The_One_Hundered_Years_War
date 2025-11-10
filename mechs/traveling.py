@@ -35,11 +35,11 @@ symbols = {
     
     # Common locations
     "Armory": "A",
-    "Market": "M",     # ⚠ clash with Mosque, so change:
+    "Market": "S",     # ⚠ clash with Mosque, so change:
     "Market": "E",     # E = ExchangE
     "Bazaar": "B",
     "Tower": "W",      # W from toWer
-    "Bridge": "R",      # ⚠ clash with Cairo, so change:
+    "Bridge": "∩",      # ⚠ clash with Cairo, so change:
     "Bridge": "X"      # but Bazaar already B → make Bridge = "X"
 }
 
