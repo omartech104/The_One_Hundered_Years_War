@@ -1,5 +1,10 @@
 import os
 import sys
+from rich.console import Console
+
+from rich.text import Text
+
+console = Console()
 
 from mechs import NPC, ascii_art, badges, fighting, inventory, quest, shopping, traveling
 from mechs.quest import start_quest
@@ -27,14 +32,9 @@ def draw():
 while run:
     while menu:
         clear_screen()
+        draw()
         ascii_art.welcome_screen()
         draw()
-        print("1. NEW GAME")
-        print("2. LOAD GAME")
-        print("3. RULES")
-        print("4. QUIT GAME")
-        draw()
-
         if rules:
             print("Play the game cleanfully")
             rules = False

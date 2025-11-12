@@ -1,13 +1,15 @@
 import random
+from rich.console import Console
 from mechs import traveling, shopping, inventory, badges
+
+console = Console()
 
 # player stats
 player_hp = 1500
-player_hp = min(player_hp, 1500)
 player_dp = 50
 equipped_weapon = None
 
-# enemy spawn points (city -> tile -> enemy types)
+# enemy spawn points
 enemy_spawns = {
     "London": {
         "Crossroad": ["Bandit", "Thief"],
@@ -26,6 +28,9 @@ enemy_spawns = {
     }
 }
 
+# add your new cities here if needed
+# "Prague": {...}, "Venice": {...}, etc.
+
 
 # enemy class
 class Enemy:
@@ -35,31 +40,30 @@ class Enemy:
         self.hp = random.randint(500, 1200)
 
     def cutscene(self):
-        print(f"A {self.kind} appears at this location!")
+        console.print(f"[bold red]⚔ A {self.kind} appears at this location! ⚔[/bold red]")
 
 
 # equip weapon system
 def equip_weapon():
     global player_dp, equipped_weapon
-    from mechs import shopping
-
     inv = shopping.inventory
     shops = shopping.shops
 
     if not inv:
-        print("You have no weapons in your inventory!")
+        console.print("[bold red]You have no weapons in your inventory![/bold red]")
         return
 
-    print("\nYour Weapons:")
+    console.print("\n[bold yellow]Your Weapons:[/bold yellow]")
     weapon_list = []
     for item in inv:
         for city in shops.values():
-            if "Armory" in city and item in city["Armory"].keys():
+            if "Armory" in city and item in city["Armory"]:
                 weapon_list.append(item)
-                print(f"{len(weapon_list)}. {item} ({city['Armory'][item]['damage']} dmg)")
+                dmg = city["Armory"][item]["damage"]
+                console.print(f"[green]{len(weapon_list)}.[/green] {item} ([cyan]{dmg} dmg[/cyan])")
 
     if not weapon_list:
-        print("You have no usable weapons (only items).")
+        console.print("[bold red]You have no usable weapons (only items).[/bold red]")
         return
 
     choice = input("\nChoose a weapon to equip: ")
@@ -72,32 +76,34 @@ def equip_weapon():
                 player_dp = city["Armory"][weapon]["damage"]
                 if badges.badges[0]["unlocked"]:
                     player_dp += 40
-                    print("Damage boost applied")
-                print(f"\nYou equipped the {weapon}! Damage set to {player_dp}")
+                    console.print("[bold green]Badge bonus: +40 damage[/bold green]")
+                console.print(f"\n[bold cyan]You equipped the {weapon}![/bold cyan] Damage set to [bold yellow]{player_dp}[/bold yellow]")
                 return
     else:
-        print("Invalid choice, you fight with fists.")
+        console.print("[bold red]Invalid choice — you fight with your fists.[/bold red]")
         equipped_weapon = None
         player_dp = 50
 
 
 # player attacks enemy
 def player_attack(enemy):
+    global player_dp
     damage = player_dp
     enemy.hp -= damage
-    print(f"You hit the {enemy.kind} with {equipped_weapon or 'fists'} for {damage} damage!")
+    console.print(f"[bold green]You hit the {enemy.kind} with {equipped_weapon or 'fists'} for {damage} damage![/bold green]")
     if enemy.hp <= 0:
-        print(f"The {enemy.kind} has been slain!")
+        console.print(f"[bold yellow]The {enemy.kind} has been slain![/bold yellow]")
         if enemy.kind == "Bandit":
             badges.badges[0]["unlocked"] = True
         return True
-        
     return False
+
 
 def player_heal():
     global player_hp
     inventory.view_inventory()
     player_hp = min(player_hp, 1500)
+    console.print(f"[bold green]Your HP is now {player_hp}[/bold green]")
 
 
 # enemy attacks player
@@ -105,29 +111,30 @@ def enemy_attack(enemy):
     global player_hp
     damage = enemy.dp
     player_hp -= damage
-    print(f"The {enemy.kind} attacked you for {damage} damage! Current HP: {player_hp}")
+    console.print(f"[red]The {enemy.kind} attacked you for [bold red]{damage}[/bold red] damage![/red] [bold white]Current HP: {player_hp}[/bold white]")
     if player_hp <= 0:
-        print("You were slain... Game Over.")
+        console.print("[bold red]You were slain... Game Over.[/bold red]")
         return True
     return False
 
 
-# combat loop (returns whether enemy was killed, and loot)
+# combat loop
 def combat(enemy):
     global player_hp
     enemy.cutscene()
     equip_weapon()
 
     while player_hp > 0 and enemy.hp > 0:
-        print(f"\nYour HP: {player_hp} | Enemy HP: {enemy.hp}")
-        des = input("What do you do?\n1. Attack\n2. Heal\n3. Dodge\n> ")
+        console.print(f"\n[bold blue]Your HP:[/bold blue] {player_hp} | [bold red]Enemy HP:[/bold red] {enemy.hp}")
+        console.print("\n[bold red]1. Attack[/bold red] | [bold green]2. Heal[/bold green] | [bold yellow]3. Dodge[/bold yellow]")
+        des = input("> ")
 
         if des == "1":
             killed = player_attack(enemy)
             if killed:
-                # ✅ Enemy drops loot
                 loot = [f"{enemy.kind} Loot"]
                 shopping.inventory.extend(loot)
+                console.print(f"[bold magenta]You looted: {loot}[/bold magenta]")
                 return enemy.kind, loot
             if random.random() < 0.8:
                 if enemy_attack(enemy):
@@ -136,13 +143,13 @@ def combat(enemy):
             player_heal()
         elif des == "3":
             if random.random() > 0.5:
-                print("You dodged the attack successfully!")
+                console.print("[bold green]You dodged successfully![/bold green]")
             else:
-                print("Dodge failed!")
+                console.print("[bold red]Dodge failed![/bold red]")
                 if enemy_attack(enemy):
                     return None, []
         else:
-            print("Invalid choice! The enemy takes the chance to strike...")
+            console.print("[bold red]Invalid choice! The enemy takes the chance to strike...[/bold red]")
             if enemy_attack(enemy):
                 return None, []
 
@@ -159,8 +166,7 @@ def check_for_enemy():
         possible_enemies = enemy_spawns[city][tile]
         enemy_kind = random.choice(possible_enemies)
         enemy = Enemy(enemy_kind)
-        return combat(enemy)  # ✅ returns (defeated_enemy, looted_items)
-
+        return combat(enemy)
     else:
-        print("The area is quiet. No enemies here.")
-        return None, []
+        console.print("[dim]The area is quiet. No enemies here.[/dim]")
+

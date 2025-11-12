@@ -1,22 +1,28 @@
 import random
+from rich.console import Console
+console = Console()
+
 from mechs import fighting, shopping, inventory
 from .puzzles import cipher
 
+# Boss stats
 boss_hp = 1500
 boss_attack = (50, 390)  # random attack range
 equipped_weapon = None
 equipped_damage = 50  # fists by default
-defeated = False  # ✅ boss state is tracked
+defeated = False  # ✅ track boss defeat state
 
 
+# -----------------------------------------------------------
+# Weapon Equip
+# -----------------------------------------------------------
 def equip_weapon():
     global equipped_weapon, equipped_damage
 
     if not shopping.inventory:
-        print("You have no items in your inventory!")
+        console.print("[bold red]You have no items in your inventory![/bold red]")
         return
 
-    # Filter inventory for weapons (items found in any Armory)
     weapon_list = []
     for item in shopping.inventory:
         for city in shopping.shops.values():
@@ -24,105 +30,114 @@ def equip_weapon():
                 weapon_list.append((item, city["Armory"][item]["damage"]))
 
     if not weapon_list:
-        print("You have no usable weapons. Fighting with fists (50 dmg).")
+        console.print("[bold yellow]No usable weapons found — fighting with fists (50 dmg).[/bold yellow]")
         equipped_weapon = None
         equipped_damage = 50
         return
 
-    print("\nChoose a weapon to equip:")
+    console.print("\n[bold cyan]Choose a weapon to equip:[/bold cyan]")
     for idx, (weapon, dmg) in enumerate(weapon_list, 1):
-        print(f"{idx}. {weapon} ({dmg} dmg)")
+        console.print(f"[green]{idx}.[/green] {weapon} [bold yellow]({dmg} dmg)[/bold yellow]")
 
     choice = input("> ").strip()
     if choice.isdigit():
         choice = int(choice) - 1
         if 0 <= choice < len(weapon_list):
             equipped_weapon, equipped_damage = weapon_list[choice]
-            print(f"You equipped {equipped_weapon}! Damage set to {equipped_damage}")
+            console.print(f"[bold cyan]You equipped {equipped_weapon}![/bold cyan] Damage set to [bold yellow]{equipped_damage}[/bold yellow]")
             return
 
-    print("Invalid choice. Fighting with fists (50 dmg).")
+    console.print("[bold red]Invalid choice. Fighting with fists (50 dmg).[/bold red]")
     equipped_weapon = None
     equipped_damage = 50
 
 
+# -----------------------------------------------------------
+# Boss Fight: Cathedral Guardian
+# -----------------------------------------------------------
 def fight_cathedral_boss():
     global boss_hp, defeated
 
-    if defeated:  # ✅ prevents multiple fights
-        print("\nThe Cathedral Guardian has already been defeated.")
+    if defeated:
+        console.print("\n[bold white]The Cathedral Guardian[/bold white] has already been defeated.")
         return
 
-    print("\nYou enter the dark Cathedral. A towering knight, the Guardian of Shifts, blocks your way!")
+    console.print("\nYou enter the dark Cathedral...")
+    console.print("[bold white]A towering knight — the Guardian of Shifts — blocks your way![/bold white]")
 
-    # Let player pick weapon
     equip_weapon()
 
     while boss_hp > 0 and fighting.player_hp > 0:
-        print(f"\nYour HP: {fighting.player_hp} | Boss HP: {boss_hp}")
-        print("1. Attack")
-        print("2. Use Item")
-        print("3. Run")
-
+        console.print(f"\nYour HP: [bold green]{fighting.player_hp}[/bold green] | Boss HP: [bold red]{boss_hp}[/bold red]")
+        console.print("[bold red]1.[/bold red] Attack  |  [bold yellow]2.[/bold yellow] Use Item  |  [bold blue]3.[/bold blue] Run")
         choice = input("> ").strip()
 
+        # 🗡️ Attack
         if choice == "1":
             damage = equipped_damage
             boss_hp -= damage
-            print(f"You strike the Cathedral Guardian with {equipped_weapon or 'fists'} for {damage} damage!")
+            console.print(f"You strike the [bold white]Cathedral Guardian[/bold white] with {equipped_weapon or 'fists'} for [bold red]{damage}[/bold red] damage!")
 
+        # 🧪 Use Item
         elif choice == "2":
             if not shopping.inventory:
-                print("Your inventory is empty!")
+                console.print("[bold red]Your inventory is empty![/bold red]")
             else:
-                print("\nChoose an item to use:")
+                console.print("\n[bold yellow]Choose an item to use:[/bold yellow]")
                 for idx, item in enumerate(shopping.inventory, 1):
-                    print(f"{idx}. {item}")
+                    console.print(f"[green]{idx}.[/green] {item}")
                 item_choice = input("> ").strip()
                 if item_choice.isdigit():
                     item_choice = int(item_choice) - 1
                     if 0 <= item_choice < len(shopping.inventory):
-                        inventory.use_item(shopping.inventory[item_choice])  # ✅ fixed import
+                        inventory.use_item(shopping.inventory[item_choice])
                     else:
-                        print("Invalid choice.")
+                        console.print("[bold red]Invalid choice.[/bold red]")
                 else:
-                    print("Invalid input.")
+                    console.print("[bold red]Invalid input.[/bold red]")
 
+        # 🏃 Run
         elif choice == "3":
-            print("You flee from the Cathedral... but the boss awaits still.")
+            console.print("[bold yellow]You flee from the Cathedral... but the Guardian still stands.[/bold yellow]")
             defeated = False
             return
 
         else:
-            print("Invalid choice.")
+            console.print("[bold red]Invalid choice.[/bold red]")
             continue
 
-        # Boss counterattacks if still alive
+        # 🩸 Boss counterattack
         if boss_hp > 0:
             boss_damage = random.randint(*boss_attack)
             fighting.player_hp -= boss_damage
-            print(f"The Guardian smashes you for {boss_damage} damage!")
+            console.print(f"The [bold white]Guardian[/bold white] smashes you for [bold red]{boss_damage}[/bold red] damage!")
+            if fighting.player_hp <= 0:
+                console.print("\n[bold red]You were slain by the Cathedral Guardian...[/bold red]")
+                defeated = False
+                return
 
-    if fighting.player_hp <= 0:
-        print("\nYou were slain by the Cathedral Guardian...")
-        defeated = False
-    else:
-        print("\nYou defeated the Cathedral Guardian!")
+    # 🏆 Victory
+    if boss_hp <= 0:
+        console.print("\n[bold green]You defeated the Cathedral Guardian![/bold green]")
+        defeated = True
         post_boss_event()
-        defeated = True  # ✅ boss stays defeated
 
 
+# -----------------------------------------------------------
+# Post-boss Event
+# -----------------------------------------------------------
 def post_boss_event():
-    print("\nAs the Guardian falls, his voice echoes in the cathedral halls...")
-    print('"The amount of shifts... is 3..."')
-    print("\nA chest appears before you. It seems to need a number to open.")
+    console.print("\nAs the Guardian falls, his voice echoes through the Cathedral halls...")
+    console.print('"The amount of shifts... is [bold yellow]3[/bold yellow]..."')
+    console.print("\nA chest appears before you. It seems to need a number to open.")
 
     attempt = input("Enter the number: ").strip()
     if attempt == "3":
-        print("\nThe chest clicks open...")
+        console.print("\n[bold green]The chest clicks open...[/bold green]")
         inventory.content = cipher.message
-        print(f"You obtained the real message")
+        console.print("[bold cyan]You obtained the real message![/bold cyan]")
         shopping.player_gold += 355
+        console.print("[bold yellow]+355 Gold[/bold yellow]")
     else:
-        print("\nThe chest remains sealed... Maybe try again later.")
+        console.print("\n[bold red]The chest remains sealed... Maybe try again later.[/bold red]")
 
