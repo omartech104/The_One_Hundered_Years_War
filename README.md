@@ -70,7 +70,7 @@ python main.py
 
 ## 🎯 Roadmap  
 - [ ] Add more story branches and endings  
-- [ ] Implement player stats (health, morale, resources)  
+- [x] Implement player stats (health, resources)  
 - [ ] Add save/load system  
 - [x] Improve UX with colored terminal output  
 - [ ] Release v1.0 — Full campaign mode  
