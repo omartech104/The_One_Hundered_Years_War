@@ -55,12 +55,21 @@ def equip_weapon():
 
     console.print("\n[bold yellow]Your Weapons:[/bold yellow]")
     weapon_list = []
+    weapon_data = {}
+    printed = set()
+
     for item in inv:
+        if item in printed:
+            continue
         for city in shops.values():
-            if "Armory" in city and item in city["Armory"]:
+            armory = city.get("Armory", {})
+            if item in armory:
+                dmg = armory[item].get("damage", 50)
                 weapon_list.append(item)
-                dmg = city["Armory"][item]["damage"]
+                weapon_data[item] = dmg
+                printed.add(item)
                 console.print(f"[green]{len(weapon_list)}.[/green] {item} ([cyan]{dmg} dmg[/cyan])")
+                break  # ✅ stops after first match
 
     if not weapon_list:
         console.print("[bold red]You have no usable weapons (only items).[/bold red]")
@@ -70,20 +79,16 @@ def equip_weapon():
 
     if choice.isdigit() and 1 <= int(choice) <= len(weapon_list):
         weapon = weapon_list[int(choice) - 1]
-        for city in shops.values():
-            if "Armory" in city and weapon in city["Armory"]:
-                equipped_weapon = weapon
-                player_dp = city["Armory"][weapon]["damage"]
-                if badges.badges[0]["unlocked"]:
-                    player_dp += 40
-                    console.print("[bold green]Badge bonus: +40 damage[/bold green]")
-                console.print(f"\n[bold cyan]You equipped the {weapon}![/bold cyan] Damage set to [bold yellow]{player_dp}[/bold yellow]")
-                return
+        equipped_weapon = weapon
+        player_dp = weapon_data[weapon]
+        if badges.badges[0]["unlocked"]:
+            player_dp += 40
+            console.print("[bold green]Badge bonus: +40 damage[/bold green]")
+        console.print(f"\n[bold cyan]You equipped the {weapon}![/bold cyan] Damage set to [bold yellow]{player_dp}[/bold yellow]")
     else:
         console.print("[bold red]Invalid choice — you fight with your fists.[/bold red]")
         equipped_weapon = None
         player_dp = 50
-
 
 # player attacks enemy
 def player_attack(enemy):

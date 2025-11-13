@@ -1,181 +1,195 @@
-from mechs import badges
+from rich.console import Console
+from rich.table import Table
+from rich.panel import Panel
+from rich.text import Text
+from rich.prompt import Prompt
+from mechs import traveling
 
-# Example player variables
+console = Console()
+
+# --- Player Variables ---
 player_gold = 500
-unlocked_badges = badges.badges
-
 inventory = []
 
 
-# Shops dictionary with stock
+# --- SHOPS DATABASE ---
 shops = {
     "London": {
         "Market": {
             "A loaf of bread": {"price": 5, "desc": "Baked in a simple oven.", "stock": 5},
-            "Astrolabe": {"price": 400, "desc": "A insturment of navigation.", "stock": 5},
-            "Gemstone": {"price": 800, "desc": "A rare gemstone", "stock": 1},
-            "Health Potion": {"price": 450, "desc": "A potion for restoring health", "stock": 6},
-            "Map Of London": {"price": 10, "desc": "The Map Of London", "stock": 2}
+            "Astrolabe": {"price": 400, "desc": "An instrument of navigation.", "stock": 5},
+            "Gemstone": {"price": 800, "desc": "A rare gemstone.", "stock": 1},
+            "Health Potion": {"price": 450, "desc": "Restores health instantly.", "stock": 6},
+            "Map Of London": {"price": 10, "desc": "The map of London.", "stock": 2}
         },
         "Armory": {
-            "Longsword": {"price": 80, "desc": "A strong blade favored by knights.", "damage": 300, "stock": 2},
-            "Battle Axe": {"price": 100, "desc": "A heavy axe for brutal combat.", "damage": 350, "stock": 2},
-            "Short Bow": {"price": 60, "desc": "A simple bow with limited range.", "damage": 200, "stock": 3},
-            "Warhammer": {"price": 120, "desc": "Crush your foes with sheer force.", "damage": 400, "stock": 1},
-            "Dagger": {"price": 30, "desc": "Quick, light, and deadly up close.", "damage": 150, "stock": 4}
+            "Longsword": {"price": 80, "desc": "Strong blade favored by knights.", "damage": 300, "stock": 2},
+            "Battle Axe": {"price": 100, "desc": "Heavy axe for brutal combat.", "damage": 350, "stock": 2},
+            "Short Bow": {"price": 60, "desc": "Simple bow with limited range.", "damage": 200, "stock": 3},
+            "Warhammer": {"price": 120, "desc": "Crush your foes with force.", "damage": 400, "stock": 1},
+            "Dagger": {"price": 30, "desc": "Quick, light, and deadly.", "damage": 150, "stock": 4}
         }
     },
+
     "Paris": {
         "Market": {
             "Book": {"price": 30, "desc": "A tome of medieval knowledge.", "stock": 3},
             "Wine": {"price": 20, "desc": "A fine Parisian vintage.", "stock": 5},
             "Illuminated Manuscript": {"price": 60, "desc": "A missing part of something unknown.", "stock": 1},
-            "Map Of Paris": {"price": 8, "desc": "The Map Of Paris", "stock": 3}
+            "Map Of Paris": {"price": 8, "desc": "The Map of Paris.", "stock": 3}
         },
         "Armory": {
-            "Rapier": {"price": 90, "desc": "Elegant and deadly fencing blade.", "damage": 250, "stock": 2},
+            "Rapier": {"price": 90, "desc": "Elegant fencing blade.", "damage": 250, "stock": 2},
             "Halberd": {"price": 110, "desc": "A polearm used by Parisian guards.", "damage": 370, "stock": 2},
             "Crossbow": {"price": 100, "desc": "Powerful but slow to reload.", "damage": 320, "stock": 2},
-            "Mace": {"price": 70, "desc": "A crushing weapon popular among clergy knights.", "damage": 280, "stock": 3},
-            "Dirk": {"price": 40, "desc": "A slim blade used by assassins.", "damage": 180, "stock": 4}
+            "Mace": {"price": 70, "desc": "Crushing weapon popular among clergy knights.", "damage": 280, "stock": 3},
+            "Dirk": {"price": 40, "desc": "Slim blade used by assassins.", "damage": 180, "stock": 4}
         }
     },
+
     "Cairo": {
         "Bazaar": {
             "Spices": {"price": 25, "desc": "Exotic spices from the East.", "stock": 5},
-            "Halum Cheese": {"price": 50, "desc": "A half pound of local-made Cheese.", "stock": 3},
-            "A copy of matn al-ajrumiyyah": {"price": 100, "desc": "A rare copy of matn al-ajrumiyyah.", "stock": 1},
-            "Map Of Cairo": {"price": 8, "desc": "The Map Of Cairo", "stock": 3}
+            "Halum Cheese": {"price": 50, "desc": "A half pound of local cheese.", "stock": 3},
+            "A copy of matn al-ajrumiyyah": {"price": 100, "desc": "Rare Arabic grammar manuscript.", "stock": 1},
+            "Map Of Cairo": {"price": 8, "desc": "The Map of Cairo.", "stock": 3}
         },
         "Armory": {
-            "Shamshir": {"price": 85, "desc": "A curved sword, swift and sharp.", "damage": 270, "stock": 2},
-            "Spear": {"price": 60, "desc": "Simple but effective in battle.", "damage": 240, "stock": 3},
+            "Shamshir": {"price": 85, "desc": "Curved sword, swift and sharp.", "damage": 270, "stock": 2},
+            "Spear": {"price": 60, "desc": "Simple but effective.", "damage": 240, "stock": 3},
             "Composite Bow": {"price": 95, "desc": "Strong bow with great range.", "damage": 280, "stock": 2},
-            "Khopesh": {"price": 120, "desc": "An ancient Egyptian sickle-sword.", "damage": 360, "stock": 1},
-            "Jambiya": {"price": 35, "desc": "A traditional curved dagger.", "damage": 160, "stock": 4}
+            "Khopesh": {"price": 120, "desc": "Ancient Egyptian sickle-sword.", "damage": 360, "stock": 1},
+            "Jambiya": {"price": 35, "desc": "Curved dagger from Arabia.", "damage": 160, "stock": 4}
         }
     },
 
     "Prague": {
         "Market": {
-            "Medieval Bread": {"price": 5, "desc": "A loaf baked in a Prague bakery.", "stock": 5},
+            "Medieval Bread": {"price": 5, "desc": "A loaf from Prague bakery.", "stock": 5},
             "Ale": {"price": 15, "desc": "Locally brewed dark ale.", "stock": 8},
-            "Map Of Prague": {"price": 10, "desc": "The Map Of Prague", "stock": 3},
-            "Amber Necklace": {"price": 100, "desc": "A necklace made from Bohemian amber.", "stock": 2}
+            "Map Of Prague": {"price": 10, "desc": "The Map Of Prague.", "stock": 3},
+            "Amber Necklace": {"price": 100, "desc": "Necklace made from Bohemian amber.", "stock": 2}
         },
         "Armory": {
-            "Sword": {"price": 80, "desc": "A sharp sword forged in Bohemia.", "damage": 300, "stock": 2},
-            "War Axe": {"price": 100, "desc": "A heavy axe favored by knights.", "damage": 350, "stock": 2},
-            "Crossbow": {"price": 90, "desc": "Simple crossbow with decent range.", "damage": 280, "stock": 3},
+            "Sword": {"price": 80, "desc": "Forged in Bohemia.", "damage": 300, "stock": 2},
+            "War Axe": {"price": 100, "desc": "Heavy axe favored by knights.", "damage": 350, "stock": 2},
+            "Throwing Knives": {"price": 90, "desc": "Set of sharp throwing knives.", "damage": 100, "stock": 3},
             "Mace": {"price": 70, "desc": "A crushing weapon for close combat.", "damage": 270, "stock": 2},
-            "Dagger": {"price": 30, "desc": "Quick and deadly in close quarters.", "damage": 150, "stock": 4}
         }
     },
+
     "Venice": {
         "Market": {
-            "Glass Beads": {"price": 25, "desc": "Finely made Venetian glass beads.", "stock": 5},
-            "Wine": {"price": 20, "desc": "A local Venetian vintage.", "stock": 6},
-            "Map Of Venice": {"price": 12, "desc": "The Map Of Venice", "stock": 3},
+            "Glass Beads": {"price": 25, "desc": "Finely made Venetian glass.", "stock": 5},
+            "Wine": {"price": 20, "desc": "Local Venetian vintage.", "stock": 6},
+            "Map Of Venice": {"price": 12, "desc": "The Map Of Venice.", "stock": 3},
             "Silk Cloth": {"price": 60, "desc": "Imported silk from the East.", "stock": 2}
         },
         "Armory": {
-            "Rapier": {"price": 90, "desc": "Elegant fencing blade from Venice.", "damage": 250, "stock": 2},
-            "Halberd": {"price": 110, "desc": "Used by city guards.", "damage": 370, "stock": 2},
-            "Short Bow": {"price": 60, "desc": "Compact bow, useful in city streets.", "damage": 200, "stock": 3},
-            "Mace": {"price": 70, "desc": "A heavy weapon to break armor.", "damage": 280, "stock": 2},
-            "Dagger": {"price": 35, "desc": "Small and easy to conceal.", "damage": 160, "stock": 4}
+            "Stiletto": {"price": 90, "desc": "Elegant Venetian blade.", "damage": 250, "stock": 2},
+            "Pike": {"price": 110, "desc": "Used by city guards.", "damage": 370, "stock": 2},
+            "Short Bow": {"price": 60, "desc": "Compact city bow.", "damage": 200, "stock": 3},
+            "Cinquedea": {"price": 35, "desc": "Triangular dagger.", "damage": 160, "stock": 4}
         }
     },
+
     "Tours": {
         "Market": {
-            "Cheese": {"price": 15, "desc": "Local Tours cheese, creamy and rich.", "stock": 5},
+            "Cheese": {"price": 15, "desc": "Local Tours cheese.", "stock": 5},
             "Wine": {"price": 20, "desc": "Fine Loire Valley wine.", "stock": 6},
-            "Map Of Tours": {"price": 8, "desc": "The Map Of Tours", "stock": 3},
-            "Book of Prayers": {"price": 50, "desc": "A religious text used by locals.", "stock": 2}
+            "Map Of Tours": {"price": 8, "desc": "The Map Of Tours.", "stock": 3},
+            "Book of Prayers": {"price": 50, "desc": "A local religious text.", "stock": 2}
         },
         "Armory": {
-            "Longsword": {"price": 80, "desc": "A strong blade favored by knights.", "damage": 300, "stock": 2},
-            "Battle Axe": {"price": 100, "desc": "Heavy axe for brutal combat.", "damage": 350, "stock": 2},
-            "Crossbow": {"price": 90, "desc": "Standard ranged weapon.", "damage": 280, "stock": 3},
-            "Warhammer": {"price": 120, "desc": "Crush your foes with force.", "damage": 400, "stock": 1},
-            "Dagger": {"price": 30, "desc": "Quick and light.", "damage": 150, "stock": 4}
+            "Arming Sword": {"price": 80, "desc": "Strong soldier’s blade.", "damage": 200, "stock": 2},
+            "Poleaxe": {"price": 100, "desc": "Light but powerful axe.", "damage": 250, "stock": 2},
+            "Throwing Spear": {"price": 90, "desc": "A balanced spear.", "damage": 180, "stock": 3},
+            "Warhammer": {"price": 120, "desc": "Crush your foes.", "damage": 400, "stock": 1},
         }
     }
 }
 
+city_market_pos = {
+    "London": (3, 5),
+    "Paris": (3, 5),
+    "Cairo": (1, 1),
+    "Prague": (1, 5),
+    "Venice": (1, 5),
+    "Tours": (1, 5),
+}
 
-def open_shop():
-    from mechs import traveling
-    global player_gold, inventory
+# --- FUNCTIONS ---
 
-    city = traveling.current_city
-    shop_type = None
-    if city == "Cairo":
-        shop_type = input("Do you want to visit the Bazaar or Armory? ").capitalize()
-        if shop_type not in ["Bazaar", "Armory"]:
-            print("Invalid choice.")
-            return
-    else:
-        shop_type = input("Do you want to visit the Market or Armory? ").capitalize()
-        if shop_type not in ["Market", "Armory"]:
-            print("Invalid choice.")
-            return
-
-    # Change player position (example coords)
-    if city == "London" and shop_type == "Market":
-        traveling.player_pos = (3, 5)
-    elif city == "London" and shop_type == "Armory":
-        traveling.player_pos = (1, 1)
-
-    elif city == "Paris" and shop_type == "Market":
-        traveling.player_pos = (3, 5)
-    elif city == "Paris" and shop_type == "Armory":
-        traveling.player_pos = (1, 5)
-
-    elif city == "Cairo" and shop_type == "Bazaar":
-        traveling.player_pos = (1, 1)
-    elif city == "Cairo" and shop_type == "Armory":
-        traveling.player_pos = (3, 1)
-
-    row, col = traveling.player_pos
-    print(f"\nYou walk to the {shop_type} in {city}.")
-    print(f"You are now at {traveling.current_map[row][col]}.\n")
-
-    # Fetch shop
-    city_shop = shops[city][shop_type]
+def show_city_shops(city):
+    """Shows all shops in the city and allows player to enter them"""
+    if city not in shops:
+        console.print(f"[bold red]No shops available in {city}[/bold red]")
+        return
 
     while True:
-        print("Items for sale:")
-        for i, item in enumerate(city_shop, start=1):
-            info = city_shop[item]
-            stock_info = f"(Stock: {info['stock']})" if "stock" in info else ""
-            print(f"{i}. {item} - {info['price']} gold - {info['desc']} {stock_info}")
+        console.clear()
+        console.print(Panel.fit(f"[bold cyan]{city} Shops[/bold cyan]", border_style="bright_blue"))
+        city_shops = shops[city]
+        for shop_name in city_shops:
+            console.print(f"[bold yellow]- {shop_name}[/bold yellow]")
+        console.print("[red]B[/red] - Go back to the Market")
 
-        print(f"\nYour gold: {player_gold}")
-        print("Type the item number to buy, or 0 to exit.")
-
-        choice = input("# ")
-
-        if choice == "0":
-            print("Leaving the shop...")
+        selected = Prompt.ask("[green]Enter shop name[/green]").strip()
+        if selected.lower() == "b":
+            set_player_to_market(city)
             break
-
-        if not choice.isdigit() or int(choice) < 1 or int(choice) > len(city_shop):
-            print("Invalid choice, try again.\n")
-            continue
-
-        item_name = list(city_shop.keys())[int(choice) - 1]
-        item_data = city_shop[item_name]
-
-        if item_data.get("stock", 1) <= 0:
-            print(f"{item_name} is out of stock.\n")
-            continue
-
-        if player_gold >= item_data["price"]:
-            player_gold -= item_data["price"]
-            inventory.append(item_name)
-            item_data["stock"] -= 1
-            print(f"You bought {item_name}! Remaining gold: {player_gold}\n")
+        elif selected in city_shops:
+            open_shop(city, selected)
         else:
-            print("Not enough gold!\n")
+            console.print("[red]Invalid shop name![/red]")
 
+def open_shop(city, shop_name):
+    global player_gold
+    shop = shops[city][shop_name]
+    console.clear()
+    console.print(Panel.fit(f"[bold cyan]{shop_name} - {city}[/bold cyan]", border_style="yellow"))
+
+    table = Table(title=f"{shop_name} Inventory", header_style="bold blue")
+    table.add_column("Item", style="bold green")
+    table.add_column("Price", justify="right")
+    table.add_column("Stock", justify="center")
+    table.add_column("Description", justify="left")
+
+    for item, data in shop.items():
+        table.add_row(item, f"{data['price']} gold", str(data['stock']), data['desc'])
+    console.print(table)
+
+    console.print(f"[bold magenta]Your gold:[/bold magenta] {player_gold}")
+    buy_item = Prompt.ask("[green]Enter item to buy[/green] or [red]B to go back[/red]")
+    if buy_item.lower() == "b":
+        return
+    if buy_item in shop:
+        item = shop[buy_item]
+        if player_gold >= item["price"] and item["stock"] > 0:
+            player_gold -= item["price"]
+            item["stock"] -= 1
+            inventory.append(buy_item)
+            console.print(f"[bold green]You bought {buy_item}![/bold green]")
+        else:
+            console.print("[red]You can’t afford that or it’s out of stock![/red]")
+    else:
+        console.print("[red]Invalid item name![/red]")
+
+    input("> Press Enter...")
+
+
+def show_inventory():
+    console.print(Panel.fit("[bold cyan]Your Inventory[/bold cyan]", border_style="bright_magenta"))
+    if not inventory:
+        console.print("[italic yellow]Your inventory is empty.[/italic yellow]")
+    else:
+        for i, item in enumerate(inventory, 1):
+            console.print(f"[bold green]{i}.[/bold green] {item}")
+    console.print(f"\n[bold magenta]Gold:[/bold magenta] {player_gold}")
+    input("> Press Enter...")
+
+
+def set_player_to_market(city):
+    """After leaving shop, set player to market tile"""
+    pos = city_market_pos.get(city, (2, 3))
+    traveling.player_pos = pos
