@@ -72,7 +72,7 @@ python main.py
 - [ ] Add more story branches and endings  
 - [ ] Implement player stats (health, morale, resources)  
 - [ ] Add save/load system  
-- [ ] Improve UX with colored terminal output  
+- [x] Improve UX with colored terminal output  
 - [ ] Release v1.0 — Full campaign mode  
 
 ---
