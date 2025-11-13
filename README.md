@@ -20,7 +20,7 @@ This repository hosts the **demo version** of the game.
 ✅ Narrative-driven gameplay with multiple outcomes  
 ✅ Modular structure (see `mechs/` folder)  
 ✅ Easy to expand — add your own stories or mechanics  
-
+✅ A nice UI 
 ---
 
 ## 🚀 Getting Started  
@@ -64,7 +64,6 @@ python main.py
 💡 Add your own stories, events, or characters in `mechs/`.  
 💡 Create new mechanics for inventory, combat, or diplomacy.  
 💡 Enhance input handling for smoother interaction.  
-💡 Add color and style for better terminal readability.  
 
 ---
 
